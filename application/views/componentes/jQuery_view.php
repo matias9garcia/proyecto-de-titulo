@@ -1,0 +1,1 @@
+<script src="<?= base_url('assets/jquery-3.7.1.min.js');?>"></script>
