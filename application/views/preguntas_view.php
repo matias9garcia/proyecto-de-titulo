@@ -38,6 +38,8 @@
 <?php
     $indicePregunta=1;
     $indicePreguntaRadio=1;
+
+    $idPreguntaJS;
     ?>
 
 
@@ -61,14 +63,18 @@
                         <p  id="pregunta_<?= $indicePregunta ?>"
 					        class="h5 ">
                             
-                            <?= $indicePregunta ?>.- <?= $pregunta->pregunta ?> 
+                            <?= $indicePregunta ?>.- <?= $pregunta->pregunta ?> (<?=$pregunta->idPregunta?>)
                         </p>
-                        <div class="invalid-feedback"></div>
+                        
                     
                     </div>
 
                     <div	class="col-md-5 form-group"
-					        id="form_group_<?=$indicePregunta?>">
+					        id="form_group_<?= "pregunta_".$pregunta->idPregunta?>">
+
+                           <?php $idPreguntaJS[]="pregunta_".$pregunta->idPregunta;?>
+
+
             <!--opciones 1 a 7 Likert-->
 
             <?php   $indiceLikert=1;
@@ -80,8 +86,11 @@
 
                         <section class="form-check form-check-inline">
 
-                    <?php $identificarPregunta = "pregunta_".$indicePregunta;
-                    $identificarRadio = $identificarPregunta."_radio_".$indiceLikert;?>
+                    <?php $identificarPregunta = "pregunta_".$pregunta->idPregunta;
+
+                    $identificarRadio = $identificarPregunta."_radio_".$indiceLikert;
+                    
+                    ?>
 					
                             <input  class=" h6 form-check-input "
                                     type="radio" 
@@ -99,9 +108,13 @@
 
                         
 
-            <?php $indiceLikert++; $indicePreguntaRadio++; endwhile;?>
+            <?php   $indiceLikert++; 
+                    $indicePreguntaRadio++; 
+                    endwhile;?>
 
                     </div>
+
+                    <div id="<?='div_pregunta_'.$pregunta->idPregunta;?>" class="invalid-feedback"></div>
                 </section>
             
             </div>
@@ -124,7 +137,11 @@
         <button type="submit" class="btn btn-primary">Enviar formulario</button>
     </div>
 </section>
-</form>           
+</form>   
+        <?php echo "<pre>";print_r($idPreguntaJS);?>
+        
+
+
            
 
 
@@ -132,9 +149,6 @@
 
 
 $("#cuestionario_MSLQ").submit(function (ev) {
-
-
-	//$("#mensajeDeAlerta").html("");
 	
 	$.ajax({
 		url: " <?= base_url('validarCuestionarioMSLQ');?>",
@@ -153,7 +167,19 @@ $("#cuestionario_MSLQ").submit(function (ev) {
 
             400:function(xhr){
 
-                
+				$("input").removeClass("is-invalid");
+
+                <?php foreach ($idPreguntaJS as $identificador):?>
+                    if( json.<?=$identificador?> ){
+                        if( json.<?=$identificador?>.length != 0 ){
+                            $("<?="div_".$identificador?> ").html(json.<?=$identificador?>);
+
+					    $("#form_group_<?=$identificador?> > input").addClass("is-invalid");
+                            
+                        }
+                    }
+                <?php endforeach; ?>
+
             }
         }
 

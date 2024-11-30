@@ -91,11 +91,11 @@ $route['ingresarAlumno'] = 'Coordinador_controller/insertarAlumno';
 /**ALUMNO */
 
 
-$route['FormularioSocio'] = 'Alumno_controller';
-
+$route['FormularioSocio'] = 'Alumno_controller/formulario';
 
 $route['FormularioPreguntas'] = 'Alumno_controller';
 
+$route['validarFormularioSocio'] = 'Alumno_controller/validarFormularioSociodemografico';
 
 $route['validarCuestionarioMSLQ'] = 'Alumno_controller/validarMSLQ';
 

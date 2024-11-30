@@ -15,6 +15,8 @@
     <title>Document</title>
 </head>
 <body>
+
+
     <div class="container">
 
      <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
@@ -147,11 +149,11 @@
   </div>
 </nav>
         
+<?php $nombreUsuario = strtoupper($this->session->userdata("nombres")."  ".$this->session->userdata("apellidos"));?> 
 
-      <p class="h3">Nombre de alumno:</p>
-      <p class="h3">Correo electrónico:</p>
+      <p class="h3">Nombre de coordinador: <b class="h6"><?=$nombreUsuario?></b> </p> 
 
-
+      
       <p class="h3">Lista de Alumnos:</p>
 
 
@@ -198,46 +200,50 @@
 <script>
 $(document).ready(function(){
 
+listarTabla();
 
+});
+var listarTabla = function(){
+    var table = $('#tablaAlumnos').DataTable({
 
-$('#tablaAlumnos').DataTable({
+            destroy:true,
+            
+            ajax:{
+                url: "<?= base_url("todosLosAlumnos");?>",
+                type:"POST"
+            },
+            language: {url:'<?= base_url("assets/datatables-Spanish.json");?>'},
+              
+            columns:[
+                {"data":"id"},
+
+                {"data":"nombreAlumnos"},
+                //{"data":"Acciones"},
+                {"defaultContent":  " <div class='btn-group'><button type='button' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#myModal'>Ver reporte</button><button type='button' class='btn btn-warning'>Bloquear Alumno</button></div> "}
+
+            ],
         
-        ajax:{
-		    url: "<?= base_url("todosLosAlumnos");?>",
-            type:"POST"
-        },
-        
-        "columns":[
-            {"data":"id"},
+        });
 
-            {"data":"nombreAlumnos"},
-            {"data":"Acciones"},
-        ],
-		language: {
-        processing:     "Procesando datos...",
-        search:         "Buscar:",
-        lengthMenu:    "Mostrar _MENU_ Alumnos",
-        info:           "Mostrando p&aacute;gina _START_ de _END_ paginas, _TOTAL_ elementos",
-        infoEmpty:      "Affichage de l'&eacute;lement 0 &agrave; 0 sur 0 &eacute;l&eacute;ments",
-        infoFiltered:   "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
-        infoPostFix:    "aaa",
-        loadingRecords: "Cargando datos...",
-        zeroRecords:    "Aucun &eacute;l&eacute;ment &agrave; afficher",
-        emptyTable:     "Aucune donnée disponible dans le tableau",
-        paginate: {
-            first:      "Primero",
-            previous:   "Anterior",
-            next:       "Siguiente",
-            last:       "&Uacute;ltimo"
-        },
-        aria: {
-            sortAscending:  ": activer pour trier la colonne par ordre croissant",
-            sortDescending: ": activer pour trier la colonne par ordre décroissant"
-        }
-    }
-     });
-})
+        obtenerDatosEditar("#tablaAlumnos tbody",table);
+
+     }     
+    
+  
+
+
+
+
+let obtenerDatosEditar = function(tbody, table)
+{
+  $(tbody).on("click", "button.btn-warning", function(){
+    var data = table.row( $(this).parents("tr") ).data();
+    console.log(data);
+  })
+
+}
 </script>
+
 
 <script>
 

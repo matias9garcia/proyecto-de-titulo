@@ -20,11 +20,6 @@ class Coordinador_controller extends CI_Controller {
     public function insertarAlumno()
 	{
 
-
-
-
-
-
 		$this->form_validation->set_rules(array(
                 'field' => 'alumnoRUT',
                 'label' => 'rut',
@@ -51,8 +46,7 @@ class Coordinador_controller extends CI_Controller {
 				
 			);
 			echo json_encode( $erroresDeValidacion );
-
-
+			
 		}
         
         else
@@ -73,28 +67,69 @@ class Coordinador_controller extends CI_Controller {
 	public function mostrarAlumnos()
 	{
 
-		$alumnos = $this->Alumnos_model->obtenerTodosLosAlumnos();
+		$alumnos = $this->Alumnos_model->obtenerTodosLosAlumnos()->result();
 
         $i=1;
 
-        foreach ($alumnos->result() as $fila){
+        foreach ($alumnos as $fila){
 
             
             $ejemploArray_JSON[]=array(
                                     'id'=>$i,//$fila->id,
-                                    'nombreAlumnos'=> $fila->nombres,
-                                    "Acciones"=>' <div class="btn-group">
-                                                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#myModal">Ver reporte</button>
-                                                    <button type="button" class="btn btn-warning">Bloquear Alumno</button>
-                                                    <!--<button type="button" class="btn btn-danger">eliminar</button>-->
-                                                    </div> '
-                                    
+                                    'nombreAlumnos'=> $fila->nombres                                    
                                 );
                                 $i++;
 
         };
         $resultado = array("data"=>$ejemploArray_JSON);
+
         echo json_encode($resultado);
+	}
+
+	public function reporte()
+	{
+		$resultados = $this->Preguntas_model->obtenerResultados();
+		
+		$totalDePreguntas = $this->Preguntas_model->totalDePreguntas();
+
+		$dimensiones = $this->Preguntas_model->buscarDimensiones();
+
+		$pdf = new FPDF();
+		$pdf->AddPage();
+		$pdf->SetFont('Arial','B',8);
+
+		$pdf->Cell(40,10,utf8_decode('Reporte '));
+		$pdf->Ln(10);
+
+		
+
+			for($i=1;$i<=$totalDePreguntas;$i++)
+			{
+
+				$textoPregunta = "(".$i.").- ".$resultados[$i-1]->pregunta;
+				$textoRespuesta = $resultados[$i-1]->respuesta;
+				$pdf->setX(20);
+				$pdf->Cell(38,8,utf8_decode($textoPregunta) ,0,1);
+					
+
+				for($j=1;$j<=7;$j++)
+				{
+
+					if($j == $textoRespuesta)
+					{
+						$pdf->Cell(5,8,utf8_decode($textoRespuesta) ,1,0);
+						$j++;
+					}
+
+					$pdf->Cell(5,8,utf8_decode($j) ,0,0);
+
+				}
+
+				
+				$pdf->Ln();
+			}
+		
+		$pdf->Output();
 	}
 
 

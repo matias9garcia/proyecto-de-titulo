@@ -38,25 +38,26 @@ class Preguntas_model extends CI_Model {
 
     public function buscarDimensiones()
     {
-        $consulta = $this->db->query('  SELECT  idDimension, nombreDimension
-                                        FROM dimensiones ');
+        $consulta = '  SELECT  idDimension, nombreDimension
+                       FROM dimensiones;';
 
+        return $this->db->query($consulta)->result();
 
-        return $consulta->result();
     }
 
 
 
     public function totalDePreguntas(){
 
-        static $cantidadDePreguntas=0;
+        static $cantidadDePreguntas;
+            //return $cantidadDePreguntas;
         
-        
-        if($cantidadDePreguntas== 0){
+        if($cantidadDePreguntas == 0){
             $consulta = $this->db->query("  SELECT COUNT(pregunta) AS cantidadDePreguntas 
                                             FROM preguntas_cuestionario_mslq ;");
             $cantidadDePreguntas = $consulta->row()->cantidadDePreguntas;
         }
+        //$cantidadDePreguntas++;
 
 
             return $cantidadDePreguntas;
@@ -66,15 +67,14 @@ class Preguntas_model extends CI_Model {
     
 
     private function calcularDimensiones (){
-
     {
-        $consulta = $this->db->query('  SELECT  p.idPregunta,p.pregunta, d.idDimension,d.nombreDimension
-                                        FROM pregunta_dimension as pd
-                                        INNER JOIN preguntas_cuestionario_mslq as p ON pd.idPregunta = p.idPregunta
-                                        INNER JOIN dimensiones as d ON d.idDimension = pd.idDimension;');
+        $consulta = '   SELECT  p.idPregunta,p.pregunta, d.idDimension,d.nombreDimension
+                        FROM pregunta_dimension as pd
+                        INNER JOIN preguntas_cuestionario_mslq as p ON pd.idPregunta = p.idPregunta
+                        INNER JOIN dimensiones as d ON d.idDimension = pd.idDimension;';
 
 
-        return $consulta->result();
+        return $this->db->query($consulta)->result();
     }
 
     }
@@ -86,5 +86,15 @@ class Preguntas_model extends CI_Model {
 
         return $consulta;
     }
+    
+    public function obtenerResultados( )
+    {
+        $consulta = '   SELECT  p.pregunta, p.idPregunta, r.respuesta as respuesta, d.idDimension, d.nombreDimension
+                        FROM pregunta_dimension as pd
+                        INNER JOIN preguntas_cuestionario_mslq as p ON pd.idPregunta = p.idPregunta
+                        INNER JOIN dimensiones as d ON d.idDimension = pd.idDimension
+                        INNER JOIN respuestas_de_cuestionario as r ON r.idPregunta = pd.idPregunta;';
 
+        return $this->db->query($consulta)->result();
+    }
 }

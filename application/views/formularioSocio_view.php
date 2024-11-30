@@ -1,26 +1,13 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    
         <?php $this->load->view("componentes/Bootstrap_view");?>
 
         <?php $this->load->view("componentes/jQuery_view");?>
-
-    <title>Document</title>
-</head>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- Latest compiled and minified CSS -->
-    <link href="<?=base_url('assets/bootstrap.min.css')?>"
-      rel="stylesheet">
 
     <title>Encuesta de Estrategias Motivacionales y de Aprendizaje</title>
 </head>
@@ -28,15 +15,83 @@
 
 <body style="background-color:#F0F0F0">
 
-<div class="container border border-3 border-gray bg-light">
-	
+<div class="container border  border-gray bg-light">
+	<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+
+  <div class="container-fluid">
+
+  
+    
+    <a class="navbar-brand" href="#">Logo</a>
+    
+    <button class="navbar-toggler" 
+            type="button" 
+            data-bs-toggle="collapse"
+            data-bs-target="#navbar">
+
+            <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navbar">
+      <ul class="navbar-nav me-auto">
+
+      </ul>
+
+
+      <div class="d-flex">
+        
+        <button class="btn btn-danger" type="button"  data-bs-toggle="modal" data-bs-target="#modalCerrarSesion">Cerrar Sesión</button>
+
+        <!--MODAL CERRAR SESIÓN -->
+<div class="modal" id="modalCerrarSesion">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Está a punto de cerrar sesión</h4>
+        <!--BOTON CERRAR MODAL( X )-->
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+
+          <div class="justify-content-center">
+
+
+	    <a class="btn btn-danger" href="<?=base_url('cerrarSesion')?>">Cerrar sesion</a>
+
+        <button type="button" class="btn btn-muted border border-2 border-gray bg-light" data-bs-dismiss="modal">Cancelar</button>
+
+
+          </div>
+      
+      </div>
+
+    </div>
+  </div>
+</div>
+
+        <!--MODAL CERRAR SESIÓN -->
+
+      </div>
+    </div>
+  </div>
+</nav>
+
+
     <h1>Formulario Sociodemografico:</h1>
+
+
     <p>A continuación deberá ingresar su información personal</p>
     <hr>
 
 
-    <form   id="formularioSociodemografico" 
-            action="<?=base_url('formularioRespuesta')?>" 
+    <form   id="formSocio" 
+            action="<?=base_url('validarFormularioSocio')?>" 
             method="POST">
 
 
@@ -46,8 +101,8 @@
 
 
         <div    class="col-md-4 form-group"
-                id="form_group_formularioSociodemografico_rut">
-            <label  for = "formularioSociodemografico_rut" 
+                id="form_group_formSocio_rut">
+            <label  for = "formSocio_rut" 
                     class = "form-label"  >
                 *RUT:
             </label>
@@ -55,9 +110,10 @@
 
             <input  type = "text"
                     class = "form-control " 
-                    id = "formularioSociodemografico_rut" 
+                    id = "formSocio_rut" 
                     placeholder = "Ingresar RUT en formato 12345678-9" 
-                    name = "formularioSociodemografico_rut" >
+                    name = "formSocio_rut" 
+                    value = <?=$this->session->userdata("rut")?>>
     
             <div class="invalid-feedback"></div><!--mensaje de error LLENAR CAMPO-->
 
@@ -70,17 +126,17 @@
 
     <!--Ingresar Nombre-->
         <div    class="col-md-6 form-group"
-                id="form_group_formularioSociodemografico_nombres">
+                id="form_group_formSocio_nombres">
         
-                <label  for = "formularioSociodemografico_nombres"
+                <label  for = "formSocio_nombres"
                         class = "form-label">
                     *Nombres:
                 </label>
                 <input  type = "text" 
                         class = "form-control" 
-                        id = "formularioSociodemografico_nombres" 
-                        placeholder = "Ingresar Nombre" 
-                        name = "formularioSociodemografico_nombres" >
+                        id = "formSocio_nombres" 
+                        placeholder = "Ingresar Nombres" 
+                        name = "formSocio_nombres" >
             
                 <div class="invalid-feedback"></div><!--mensaje de error LLENAR CAMPO-->
         </div>
@@ -88,17 +144,17 @@
 <!--Ingresar Apellidos-->
 
         <div    class="col-md-6 form-group "
-                id="form_group_formularioSociodemografico_apellidos">
+                id="form_group_formSocio_apellidos">
             
-            <label  for = "formularioSociodemografico_apellidos" 
+            <label  for = "formSocio_apellidos" 
                     class = "form-label">
                 *Apellidos:
             </label>
             <input  type = "text" 
                     class = "form-control" 
-                    id = "formularioSociodemografico_apellidos" 
+                    id = "formSocio_apellidos" 
                     placeholder="Ingresar Apellidos" 
-                    name="formularioSociodemografico_apellidos" >
+                    name="formSocio_apellidos" >
 
             <div class="invalid-feedback"></div><!--mensaje de error LLENAR CAMPO-->
         
@@ -119,30 +175,30 @@
     
         <div class="col-md-4 ">
             <div    class=" form-group"
-                    id = "form_group_formularioSociodemografico_nacionalidad">
-                <label  for = "formularioSociodemografico_nacionalidad">
+                    id = "form_group_formSocio_nacionalidad">
+                <label  for = "formSocio_nacionalidad">
                     * Nacionalidad:
                 </label>
                 <input  type = "text" 
                         class = "form-control"
-                        id = "formularioSociodemografico_nacionalidad" 
+                        id = "formSocio_nacionalidad" 
                         placeholder = "Ingresar Nacionalidad" 
-                        name = "formularioSociodemografico_nacionalidad" >
+                        name = "formSocio_nacionalidad" >
 
                 <div class="invalid-feedback"></div><!--mensaje de error LLENAR CAMPO-->
             </div>
         </div>
     
-        <div    class="col-md-4 form-group"
-                id = "form_group_formularioSociodemografico_edad">
+        <div    class="col-md-2 form-group"
+                id = "form_group_formSocio_edad">
         
-            <label for="formularioSociodemografico_edad">
+            <label for="formSocio_edad">
                 * Edad:
             </label>
             <input  type="text" class="form-control" 
-                    id="formularioSociodemografico_edad" 
+                    id="formSocio_edad" 
                     placeholder="Ingresar Edad" 
-                    name="formularioSociodemografico_edad" >
+                    name="formSocio_edad" >
         
             <div class="invalid-feedback"></div><!--mensaje de error LLENAR CAMPO-->
     
@@ -155,40 +211,21 @@
     <section class="row">
         
         <div class="col-md-4 form-group"
-            id = "form_group_formularioSociodemografico_genero">
+            id = "form_group_formSocio_genero">
 
-            <p id="formularioSociodemografico_genero">
+            <p id="formSocio_genero">
                 * Género:
             </p>
 
-            <label  for="formularioSociodemografico_generoFemenino">
-                <input  class="form-check-input"
-                        type="radio" 
-                        name="formularioSociodemografico_genero" 
-                        id="formularioSociodemografico_generoFemenino"
-                        value="femenino" >
-                        Femenino
-            </label>
-        <br>
-        
-            <label  for="formularioSociodemografico_generoMasculino">
-                <input  class="form-check-input"
-                        type="radio" 
-                        name="formularioSociodemografico_genero" 
-                        id="formularioSociodemografico_generoMasculino"
-                        value="masculino" >
-                        Masculino
-            </label>
-        <br>
-           
-            <label  for="formularioSociodemografico_generoNoResonder">
-                <input  class="form-check-input"
-                        type="radio" 
-                        name="formularioSociodemografico_genero" 
-                        id="formularioSociodemografico_generoNoResonder"
-                        value=">noResonder" >
-                        Prefiero no responder
-            </label>
+            <select id="formSocio_genero" name="formSocio_genero">
+
+    <option value="NULL">Seleccione su género</option>
+    <option value="femenino">Femenino</option>
+    <option value="masculino">Masculino</option>
+    <option value="noResonder">Prefiero no responder</option>
+
+
+</select><br>
 
 <!--mensaje de error LLENAR CAMPO-->
             <div  class="invalid-feedback"></div>
@@ -201,40 +238,20 @@
     <br>
     <section class="row">
         <div class="col-md-4 form-group"
-            id="form_group_formularioSociodemografico_carreraActual">
+            id="form_group_formSocio_carreraActual">
 
-            <p id="formularioSociodemografico_carreraActual">
+            <p id="formSocio_carreraActual">
                 * Seleccionar su carrera actual:
             </p>
             
-            <label   for="formularioSociodemografico_carreraActualCivil">
-                <input  class="form-check-input"
-                        type="radio" 
-                        name="formularioSociodemografico_carreraActual" 
-                        id="formularioSociodemografico_carreraActualCivil"
-                        value="ingCivilInf" >
-                        Ingeniería Civil en Informática
-            </label>
-            <br>
-            
-            <label  for="formularioSociodemografico_carreraActualInf">
-                <input  class="form-check-input"
-                        type="radio" 
-                        name="formularioSociodemografico_carreraActual" 
-                        id="formularioSociodemografico_carreraActualInf"
-                        value="ingInf" >
-                        Ingeniería en Informática
-            </label>
-            <br>
-            
-            <label  for="formularioSociodemografico_carreraActualCivilCiencia">
-                <input  class="form-check-input"
-                        type="radio" 
-                        name="formularioSociodemografico_carreraActual" 
-                        id="formularioSociodemografico_carreraActualCivilCiencia"
-                        value="ingCivilCiencia" >
-                        Ingeniería Civil en Ciencia de Datos
-            </label>
+            <select id="formSocio_carreraActual" name="formSocio_carreraActual">
+
+    <option value="NULL">Seleccionar su carrera actual</option>
+    <option value="ingCivilInf">Ingeniería Civil en Informática</option>
+    <option value="ingInf">Ingeniería en Informática</option>
+    <option value="ingCivilCiencia">Ingeniería Civil en Ciencia de Datos</option>
+
+</select><br>
         
         
             <div class="invalid-feedback"></div><!--mensaje de error LLENAR CAMPO-->
@@ -247,22 +264,21 @@
 
     <section class="row">
         <div class="col-md-8 form-group"
-            id="form_group_formularioSociodemografico_carreraPrimeraOpcionSiNo">
+            id="form_group_formSocio_carreraPrimeraOpcionSiNo">
         
-        <p id="formularioSociodemografico_carreraPrimeraOpcionSiNo">
+        <p id="formSocio_carreraPrimeraOpcionSiNo">
             * ¿La carrera a la cual te has inscrito fue tu primera opción?:
         </p>
 
             <div class="form-check form-check-inline">
                 
                 <label  class="form-check-label"
-                        for="formularioSociodemografico_carreraPrimeraOpcionSi">
+                        for="formSocio_carreraPrimeraOpcionSi">
                     <input  class="form-check-input"
                             type="radio"
-                            name="formularioSociodemografico_carreraPrimeraOpcionSiNo" 
-                            id="formularioSociodemografico_carreraPrimeraOpcionSi" 
-                            value="Si" >
-                        Si
+                            name="formSocio_carreraPrimeraOpcionSiNo" 
+                            id="formSocio_carreraPrimeraOpcionSi" 
+                            value="Si" > Si
                 </label>
 
             </div>
@@ -270,35 +286,40 @@
             <div class="form-check form-check-inline">
                 
                 <label  class="form-check-label"
-                        for="formularioSociodemografico_carreraPrimeraOpcionNo">
+                        for="formSocio_carreraPrimeraOpcionNo">
                     <input  class="form-check-input"
                             type="radio"
-                            name="formularioSociodemografico_carreraPrimeraOpcionSiNo" 
-                            id="formularioSociodemografico_carreraPrimeraOpcionNo" 
-                            value="No" >
-                        No
+                            name="formSocio_carreraPrimeraOpcionSiNo" 
+                            id="formSocio_carreraPrimeraOpcionNo" 
+                            value="No" > No
                 </label>
 
             </div>
+
             
-            <div id="radioCarreraPrimeraOpcion" class="invalid-feedback"></div><!--mensaje de error RESPONDER RADIO-->
+            <!--mensaje de error RESPONDER RADIO-->
+            <div id="radioCarreraPrimeraOpcion" class="invalid-feedback"></div>
+            
 
 
 
             <div    class="col-md-4 form-group" 
-                    id="form_group_formularioSociodemografico_carreraPrimeraOpcion">
+                    id="form_group_formSocio_carreraPrimeraOpcion">
 
-                <label  for="formularioSociodemografico_carreraPrimeraOpcionIngresar">
+                <label  for="formSocio_carreraPrimeraOpcionIngresar">
                         * Ingrese la primera carrera que eligió:
                 </label>
                 <input  type="text"
                         class="form-control "
-                        id="formularioSociodemografico_carreraPrimeraOpcionIngresar" 
-                        name = formularioSociodemografico_carreraPrimeraOpcion >
+                        id="formSocio_carreraPrimeraOpcionIngresar" 
+                        name = formSocio_carreraPrimeraOpcion >
+
+                
+                <!--mensaje de error LLENAR CAMPO-->    
                 <div class="invalid-feedback"></div>
             </div>
 
-            <!--mensaje de error LLENAR CAMPO-->
+            
         </div>
     </section>
 
@@ -308,50 +329,21 @@
     <section class="row">
         
         <div class="col-md-4 "
-            id="form_group_formularioSociodemografico_convivencia">
+            id="form_group_formSocio_convivencia">
 
-            <p id="formularioSociodemografico_convivencia">
+            <p id="formSocio_convivencia">
                 * ¿Con quién vive?
             </p>
             
-            <label   for="formularioSociodemografico_convivenciaFamilia">
-                <input  class="form-check-input"
-                        type="radio" 
-                        name="formularioSociodemografico_convivencia" 
-                        id="formularioSociodemografico_convivenciaFamilia"
-                        value="familia" >
-                        Con mi familia
-            </label>
-            <br>
+            <select id="formSocio_convivencia" name="formSocio_convivencia">
 
-            <label  for="formularioSociodemografico_convivenciaPension">
-                <input  class="form-check-input"
-                        type="radio" 
-                        name="formularioSociodemografico_convivencia" 
-                        id="formularioSociodemografico_convivenciaPension"
-                        value="pension" >
-                        Pensión
-            </label>
-            <br>
-            
-            <label  for="formularioSociodemografico_convivenciaPareja">
-                <input  class="form-check-input"
-                        type="radio" 
-                        name="formularioSociodemografico_convivencia" 
-                        id="formularioSociodemografico_convivenciaPareja"
-                        value="pareja" >
-                        Pareja
-            </label>
-            <br>
-            
-            <label  for="formularioSociodemografico_convivenciaSolo">
-                <input  class="form-check-input"
-                        type="radio" 
-                        name="formularioSociodemografico_convivencia" 
-                        id="formularioSociodemografico_convivenciaSolo"
-                        value="solo" >
-                        Soltero(a)
-            </label>
+    <option value="NULL">Seleccionar su convivencia</option>
+    <option value="familia">Con mi familia</option>
+    <option value="pension">Pensión</option>
+    <option value="pareja">Pareja</option>
+    <option value="solo">Soltero(a)</option>
+
+</select><br>
             <div class="invalid-feedback"></div><!--mensaje de error LLENAR CAMPO-->
         </div>
         
@@ -364,50 +356,21 @@
         
     <section class = "row">
         <div class = "col-md-6 form-group"
-                id="form_group_formularioSociodemografico_tiempoDeTraslado">
-            <p  id = "formularioSociodemografico_tiempoDeTraslado">
+                id="form_group_formSocio_trayecto">
+            <p  id = "formSocio_trayecto">
                 Normalmente, ¿Cuánto tarda en llegar a la Escuela de Ingeniería Informática?
             </p>
         
 
-        <label   for="formularioSociodemografico_tiempoDeTrasladoMenosDe30">
-            <input  class="form-check-input"
-                    type="radio" 
-                    name="formularioSociodemografico_tiempoDeTraslado" 
-                    id="formularioSociodemografico_tiempoDeTrasladoMenosDe30"
-                    value="<30" >
-                    Menos de 30 minutos
-        </label>
-        <br>
+        <select id="formSocio_trayecto" name="formSocio_trayecto">
 
-        <label  for="formularioSociodemografico_tiempoDeTrasladoIgual30">
-            <input  class="form-check-input"
-                    type="radio" 
-                    name="formularioSociodemografico_tiempoDeTraslado" 
-                    id="formularioSociodemografico_tiempoDeTrasladoIgual30"
-                    value="=30" >
-                    30 minutos
-        </label>
-        <br>
-        
-        <label  for="formularioSociodemografico_tiempoDeTrasladoMasDe30">
-            <input  class="form-check-input"
-                    type="radio" 
-                    name="formularioSociodemografico_tiempoDeTraslado" 
-                    id="formularioSociodemografico_tiempoDeTrasladoMasDe30"
-                    value=">30" >
-                    Más de 30 minutos
-        </label>
-        <br>
-           
-        <label  for="formularioSociodemografico_tiempoDeTrasladoMasDeUnaHora">
-            <input  class="form-check-input"
-                    type="radio" 
-                    name="formularioSociodemografico_tiempoDeTraslado" 
-                    id="formularioSociodemografico_tiempoDeTrasladoMasDeUnaHora"
-                    value=">60" >
-                    Más de una hora
-        </label>
+    <option value="NULL">Seleccionar su tiempo de trayecto</option>
+    <option value="menos30">Menos de 30 minutos</option>
+    <option value="igual30">30 minutos</option>
+    <option value="mas30">Más de 30 minutos</option>
+    <option value="masHora">Más de una hora</option>
+
+</select><br>
         
         <div class="invalid-feedback"></div><!--mensaje de error LLENAR CAMPO-->
 </div>
@@ -418,21 +381,21 @@
         
     <section class="row">
         <div    class="col-md-4 form-group"
-                id="form_group_formularioSociodemografico_carreraDePrecedenciaSiNo"><!--form-control-->
+                id="form_group_formSocio_carreraDePrecedenciaSiNo"><!--form-control-->
             
-            <p id="formularioSociodemografico_carreraDePrecedenciaSiNo">
+            <p id="formSocio_carreraDePrecedenciaSiNo">
                 *¿Provienes de otra carrera? 
             </p>
 
                 <div class="form-check form-check-inline">
 
                     <label  class="form-check-label"
-                            for="formularioSociodemografico_carreraDePrecedenciaSi">
+                            for="formSocio_carreraDePrecedenciaSi">
 
-                        <input  id="formularioSociodemografico_carreraDePrecedenciaSi"
+                        <input  id="formSocio_carreraDePrecedenciaSi"
                                 class="form-check-input"
                                 type="radio" 
-                                name="formularioSociodemografico_carreraDePrecedenciaSiNo" 
+                                name="formSocio_carreraDePrecedenciaSiNo" 
                                 value="Si" >
                                 Si
                     </label>
@@ -441,32 +404,35 @@
                 <div class="form-check form-check-inline">
                     
                     <label  class="form-check-label"
-                            for="formularioSociodemografico_carreraDePrecedenciaNo">
+                            for="formSocio_carreraDePrecedenciaNo">
 
-                        <input  id="formularioSociodemografico_carreraDePrecedenciaNo"
+                        <input  id="formSocio_carreraDePrecedenciaNo"
                                 class="form-check-input"
                                 type="radio"
-                                name="formularioSociodemografico_carreraDePrecedenciaSiNo" 
+                                name="formSocio_carreraDePrecedenciaSiNo" 
                                 value="No" >
                                 No
                     </label>
 
-                </div>
 
+
+                </div>
                 <div id="radiocarreraDePrecedenciaSiNo" class="invalid-feedback"></div>
+
+
         </div>
 
         <div    class="col-md-4 form-group"
-                id ="form_group_formularioSociodemografico_carreraDePrecedenciaIngresar">
-            <label for="formularioSociodemografico_carreraDePrecedenciaIngresar">
+                id ="form_group_formSocio_carreraDePrecedenciaIngresar">
+            <label for="formSocio_carreraDePrecedenciaIngresar">
                 * Ingresa la carrera de la que provienes:
             </label>
             <input  type="text" 
                     class="form-control" 
-                    id="formularioSociodemografico_carreraDePrecedenciaIngresar" 
-                    name = "formularioSociodemografico_carreraDePrecedenciaIngresar"
+                    id="formSocio_carreraDePrecedenciaIngresar" 
+                    name = "formSocio_carreraDePrecedenciaIngresar"
                     >
-            <div id="radiocarreraDePrecedenciaTexto" class="invalid-feedback"></div>
+            <div id="radiocarreraDePrecedenciaTexto" class="invalid-feedback">qq</div>
         </div>       
     </section>
 
@@ -474,61 +440,58 @@
 
     <section class="row">
         <div    class="col-md-4 form-group"
-                id="form_group_formularioSociodemografico_razonParaElegirLaCarreraActual">
-            <p id="formularioSociodemografico_razonParaElegirLaCarreraActual">
+                id="form_group_formSocio_razonParaElegirLaCarreraActual">
+
+
+            <p id="formSocio_razonParaElegirLaCarreraActual">
                 ¿Cómo y por qué eligió la carrera que cursa?
             </p>
 
-            <label   for="formularioSociodemografico_razonParaElegirLaCarreraActualEleccionLibre">
+            <label   for="formSocio_razonParaElegirLaCarreraActualEleccionLibre">
                 <input  class="form-check-input"
                         type="radio" 
-                        name="formularioSociodemografico_razonParaElegirLaCarreraActual" 
-                        id="formularioSociodemografico_razonParaElegirLaCarreraActualEleccionLibre"
-                        value="eleccionLibre"
-                        >
+                        name="formSocio_razonParaElegirLaCarreraActual" 
+                        id="formSocio_razonParaElegirLaCarreraActualEleccionLibre"
+                        value="eleccionLibre">
                         Fue elección libre
             </label>
         <br>
 
-            <label  for="formularioSociodemografico_razonParaElegirLaCarreraActualPrimeraPreferencia">
+            <label  for="formSocio_razonParaElegirLaCarreraActualPrimeraPreferencia">
                 <input  class="form-check-input"
                         type="radio" 
-                        name="formularioSociodemografico_razonParaElegirLaCarreraActual" 
-                        id="formularioSociodemografico_razonParaElegirLaCarreraActualPrimeraPreferencia"
-                        value="primeraPreferencia"
-                        >
+                        name="formSocio_razonParaElegirLaCarreraActual" 
+                        id="formSocio_razonParaElegirLaCarreraActualPrimeraPreferencia"
+                        value="primeraPreferencia">
                         Fue primera preferencia
             </label>
         <br>
         
-            <label  for="formularioSociodemografico_razonParaElegirLaCarreraActualTradicionFamiliar">
+            <label  for="formSocio_razonParaElegirLaCarreraActualTradicionFamiliar">
                 <input  class="form-check-input"
                         type="radio" 
-                        name="formularioSociodemografico_razonParaElegirLaCarreraActual" 
-                        id="formularioSociodemografico_razonParaElegirLaCarreraActualTradicionFamiliar"
-                        value="tradicionFamiliar"
-                        >
+                        name="formSocio_razonParaElegirLaCarreraActual" 
+                        id="formSocio_razonParaElegirLaCarreraActualTradicionFamiliar"
+                        value="tradicionFamiliar">
                         Es una tradición familiar
             </label>
         <br>
            
-            <label  for="formularioSociodemografico_razonParaElegirLaCarreraActualDescarte">
+            <label  for="formSocio_razonParaElegirLaCarreraActualDescarte">
                 <input  class="form-check-input"
                         type="radio" 
-                        name="formularioSociodemografico_razonParaElegirLaCarreraActual" 
-                        id="formularioSociodemografico_razonParaElegirLaCarreraActualDescarte"
-                        value="descarte"
-                        >
+                        name="formSocio_razonParaElegirLaCarreraActual" 
+                        id="formSocio_razonParaElegirLaCarreraActualDescarte"
+                        value="descarte">
                         Por descarte
             </label>
         <br>
-            <label  for="formularioSociodemografico_razonParaElegirLaCarreraActualOtroMotivo">
+            <label  for="formSocio_razonParaElegirLaCarreraActualOtroMotivo">
                 <input  class="form-check-input"
                         type="radio" 
-                        name="formularioSociodemografico_razonParaElegirLaCarreraActual" 
-                        id="formularioSociodemografico_razonParaElegirLaCarreraActualOtroMotivo"
-                        value="otroMotivo"
-                        >
+                        name="formSocio_razonParaElegirLaCarreraActual" 
+                        id="formSocio_razonParaElegirLaCarreraActualOtroMotivo"
+                        value="otroMotivo">
                         Otro motivo:
                         
                         
@@ -537,13 +500,14 @@
             
             <br>
             <br>
-            <div >
-                <input  type="text"
+            <div id="form_group_formSocio_razonParaElegirLaCarreraActualIngresarMotivo">
+                <textarea   type="text"
                     class="form-control" 
-                    id="formularioSociodemografico_razonParaElegirLaCarreraActualMotivo"
-                    name = "formularioSociodemografico_razonParaElegirLaCarreraActualIngresarMotivo"
+                    id="formSocio_razonParaElegirLaCarreraActualMotivo"
+                    name = "formSocio_razonParaElegirLaCarreraActualIngresarMotivo"
                     placeholder="Ingresar el/los motivo(s) de su elección"
                     >
+</textarea >
                 <div id="razonParaElegirLaCarreraActualOtroMotivo" class="invalid-feedback"></div>
             
             </div>
@@ -558,41 +522,41 @@
 
     <section class="row">
         <div class="col-md-5 form-group"
-                id="form_group_formularioSociodemografico_condicionMentalDiagnosticadaSiNoNose">
-            <p id="formularioSociodemografico_condicionMentalDiagnosticadaSiNoNose">
+                id="form_group_formSocio_condicionMentalDiagnosticadaSiNoNose">
+            <p id="formSocio_condicionMentalDiagnosticadaSiNoNose">
                 ¿Tiene algún tipo de condicion mental diagnosticada? 
             </p>
 
             <div class="col-md-2 ">
-                <label  for="formularioSociodemografico_condicionMentalDiagnosticadaSi">
+                <label  for="formSocio_condicionMentalDiagnosticadaSi">
                     <input  class="form-check-input radio" 
                             type="radio" 
-                            id="formularioSociodemografico_condicionMentalDiagnosticadaSi" 
+                            id="formSocio_condicionMentalDiagnosticadaSi" 
                             value="Si"
-                            name="formularioSociodemografico_condicionMentalDiagnosticadaSiNoNose"                 
+                            name="formSocio_condicionMentalDiagnosticadaSiNoNose"                 
                             >
                             Si
                 </label>
             </div>
       
             <div class="col-md-2">
-                <label  for="formularioSociodemografico_condicionMentalDiagnosticadaNo">
+                <label  for="formSocio_condicionMentalDiagnosticadaNo">
                     <input  class="form-check-input radio"
                             type="radio" 
-                            id="formularioSociodemografico_condicionMentalDiagnosticadaNo" 
+                            id="formSocio_condicionMentalDiagnosticadaNo" 
                             value="No"
-                            name="formularioSociodemografico_condicionMentalDiagnosticadaSiNoNose" 
+                            name="formSocio_condicionMentalDiagnosticadaSiNoNose" 
                             >
                             No
                 </label>
             </div>
       
             <div class="col-md-5">
-                <label for="formularioSociodemografico_condicionMentalDiagnosticadaNoSe">
+                <label for="formSocio_condicionMentalDiagnosticadaNoSe">
                     <input  class="form-check-input radio" 
                             type="radio" 
-                            name="formularioSociodemografico_condicionMentalDiagnosticadaSiNoNose" 
-                            id="formularioSociodemografico_condicionMentalDiagnosticadaNoSe" 
+                            name="formSocio_condicionMentalDiagnosticadaSiNoNose" 
+                            id="formSocio_condicionMentalDiagnosticadaNoSe" 
                             value="Nose"
                             >
                         No estoy seguro
@@ -605,17 +569,17 @@
         </div>
         
         <div    class="col-md-6 form-group" 
-                id="form_group_formularioSociodemografico_nombreDeCondicionMentalDiagnosticada">
+                id="form_group_formSocio_nombreDeCondicionMentalDiagnosticada">
         
-            <label  for = "formularioSociodemografico_nombreDeCondicionMentalDiagnosticada"
+            <label  for = "formSocio_nombreDeCondicionMentalDiagnosticada"
                     class = "form-label" >
                 *¿Cuál es su condición?
             </label>
 
             <input  type="text"
                     class="form-control" 
-                    id="formularioSociodemografico_nombreDeCondicionMentalDiagnosticada"
-                    name = "formularioSociodemografico_nombreDeCondicionMentalDiagnosticada"
+                    id="formSocio_nombreDeCondicionMentalDiagnosticada"
+                    name = "formSocio_nombreDeCondicionMentalDiagnosticada"
                     >
             <div class="invalid-feedback"></div><!--mensaje de error LLENAR CAMPO-->
         
@@ -627,39 +591,39 @@
 
     <section class="row">
         <div class="col-md-6 form-group"
-                id="form_group_formularioSociodemografico_beneficioGratuidadSiNo">
-            <p id="formularioSociodemografico_beneficioGratuidad">
+                id="form_group_formSocio_beneficioGratuidadSiNo">
+            <p id="formSocio_beneficioGratuidad">
                 ¿Tiene beneficio de gratuidad?
             </p>
 
             <div class="form-check form-check-inline">
                 
                 <label  class="form-check-label"
-                        for="formularioSociodemografico_beneficioGratuidadSi">
+                        for="formSocio_beneficioGratuidadSi">
                             <input  class="form-check-input" 
-                            type="radio"
-                            name="formularioSociodemografico_beneficioGratuidadSiNo" 
-                            id="formularioSociodemografico_beneficioGratuidadSi" 
-                            value="Si"
-                            >
+                                    type="radio"
+                                    name="formSocio_beneficioGratuidadSiNo" 
+                                    id="formSocio_beneficioGratuidadSi" 
+                                    value="Si">
                             Si
                 </label>
             </div>
         
             <div class="form-check form-check-inline">
                 
-                <label class="form-check-label" for="formularioSociodemografico_beneficioGratuidadNo">
+                <label  class="form-check-label" for="formSocio_beneficioGratuidadNo">
                     <input  class="form-check-input"
                             type="radio" 
-                            name="formularioSociodemografico_beneficioGratuidadSiNo" 
-                            id="formularioSociodemografico_beneficioGratuidadNo"
+                            name="formSocio_beneficioGratuidadSiNo" 
+                            id="formSocio_beneficioGratuidadNo"
                             value="No"
                             >
                             No
                 </label>
             </div>
-        <div id="radioBeneficioDeGratuidad"class="invalid-feedback"></div><!--mensaje de error LLENAR CAMPO-->
-        </div>
+            <!--mensaje de error LLENAR CAMPO-->
+        
+        <div id="radioBeneficioDeGratuidad" class="invalid-feedback"></div></div>
     </section>
 
 
@@ -684,57 +648,89 @@
 
 <script>
 $(document).ready(function(){
-    
+
+        $(" #form_group_formSocio_carreraDePrecedenciaIngresar ").hide();
+
+
+        $(" #form_group_formSocio_nombreDeCondicionMentalDiagnosticada ").hide();
+
+    $(" #form_group_formSocio_razonParaElegirLaCarreraActualIngresarMotivo ").hide();
+
+        $(" #form_group_formSocio_carreraPrimeraOpcion ").hide();
+
+        $(" #formSocio_carreraDePrecedencia > label , #formSocio_carreraDePrecedencia > input ").hide();
+        
+
     //$("input").prop("required", true);
 /* ¿Tiene algún tipo de condicion mental diagnosticada? */
 
 
     $(" #opcionalCualEsSucondicion > label , #opcionalCualEsSucondicion > input ").hide();
     
-    $(" #formularioSociodemografico_condicionMentalDiagnosticadaSi ").click(function(){
+    $(" #formSocio_condicionMentalDiagnosticadaSi ").click(function(){
         $(" #opcionalCualEsSucondicion > label , #opcionalCualEsSucondicion > input ").show();
     }); 
     
-    $(" #formularioSociodemografico_condicionMentalDiagnosticadaNo").click(function(){
+    $(" #formSocio_condicionMentalDiagnosticadaNo").click(function(){
         $(" #opcionalCualEsSucondicion > label , #opcionalCualEsSucondicion > input ").hide();
     });
     
-    $(" #formularioSociodemografico_condicionMentalDiagnosticadaNoSe ").click(function(){
+    $(" #formSocio_condicionMentalDiagnosticadaNoSe ").click(function(){
         $( "#opcionalCualEsSucondicion > label , #opcionalCualEsSucondicion > input ").hide();
     }); 
 
 /** ¿La carrera a la cual te has inscrito fue tu primera opción?: */
-    $(" #formularioSociodemografico_carreraPrimeraOpcion > label , #formularioSociodemografico_carreraPrimeraOpcion > input ").hide();
+    //$(" #formSocio_carreraPrimeraOpcion > label , #formSocio_carreraPrimeraOpcion > input ").hide();
     /**SI */
-    $(" #formularioSociodemografico_carreraPrimeraOpcionSi ").click(function(){
-        $(" #formularioSociodemografico_carreraPrimeraOpcion > label , #formularioSociodemografico_carreraPrimeraOpcion > input ").hide();
+
+
+
+    $(" #formSocio_carreraPrimeraOpcionSi ").click(function(){
+        $(" #form_group_formSocio_carreraPrimeraOpcion ").hide();
     });
     /**NO */
-    $(" #formularioSociodemografico_carreraPrimeraOpcionNo ").click(function(){
-        $(" #formularioSociodemografico_carreraPrimeraOpcion > label , #formularioSociodemografico_carreraPrimeraOpcion > input ").show();
+    $(" #formSocio_carreraPrimeraOpcionNo ").click(function(){
+        $(" #form_group_formSocio_carreraPrimeraOpcion ").show();
     });
     
+    $(" #formSocio_razonParaElegirLaCarreraActualOtroMotivo ").click(function(){
+        $(" #form_group_formSocio_razonParaElegirLaCarreraActualIngresarMotivo ").show();
+    });
+
+       $(" #formSocio_razonParaElegirLaCarreraActualEleccionLibre, #formSocio_razonParaElegirLaCarreraActualPrimeraPreferencia, #formSocio_razonParaElegirLaCarreraActualTradicionFamiliar, #formSocio_razonParaElegirLaCarreraActualDescarte ").click(function(){
+        $(" #form_group_formSocio_razonParaElegirLaCarreraActualIngresarMotivo ").hide();
+    });
 
 
 /*¿Provienes de otra carrera?*/ 
-    $(" #formularioSociodemografico_carreraDePrecedencia > label , #formularioSociodemografico_carreraDePrecedencia > input ").hide();
+    //$(" #formSocio_carreraDePrecedencia > label , #formSocio_carreraDePrecedencia > input ").hide();
     
-    $(" #formularioSociodemografico_carreraDePrecedenciaSi ").click(function(){
-        $(" #formularioSociodemografico_carreraDePrecedencia > label , #formularioSociodemografico_carreraDePrecedencia > input ").show();
+    $(" #formSocio_carreraDePrecedenciaSi ").click(function(){
+        $(" #form_group_formSocio_carreraDePrecedenciaIngresar ").show();
     });
-      $(" #formularioSociodemografico_carreraDePrecedenciaNo ").click(function(){
-        $(" #formularioSociodemografico_carreraDePrecedencia > label , #formularioSociodemografico_carreraDePrecedencia > input ").hide();
+      $(" #formSocio_carreraDePrecedenciaNo ").click(function(){
+        $(" #form_group_formSocio_carreraDePrecedenciaIngresar ").hide();
     });
+    
+    $(" #formSocio_condicionMentalDiagnosticadaSi ").click(function(){
+        $(" #form_group_formSocio_nombreDeCondicionMentalDiagnosticada ").show();
+    });
+
+    $(" #formSocio_condicionMentalDiagnosticadaSiNoNose, #formSocio_condicionMentalDiagnosticadaNo ").click(function(){
+        $(" #form_group_formSocio_nombreDeCondicionMentalDiagnosticada ").hide();
+    });
+    
 });
 
 </script>
 	<script >
 
-        $("#formularioSociodemografico").submit(function (ev) {
+        $("#formSocio").submit(function (ev) {
+            ev.preventDefault();
 	//$("#mensajeDeAlerta").html("");
 
 	$.ajax({
-		url: "<?= base_url('formularioRespuesta');?>",
+		url: "<?= base_url('validarFormularioSocio');?>",
 		type: "post",
 		data: $(this).serialize(),
 		success: function (err) {
@@ -753,157 +749,157 @@ $(document).ready(function(){
 				//$("#form_group_contrasena > input").removeClass("is-invalid");
 
 				console.log(json);
-				if(json.formularioSociodemografico_rut){
-                    if (json.formularioSociodemografico_rut.length != 0) {
-					    $("#form_group_formularioSociodemografico_rut > div").html(json.formularioSociodemografico_rut);
-					    $("#form_group_formularioSociodemografico_rut > input").addClass("is-invalid");
+				if(json.formSocio_rut){
+                    if (json.formSocio_rut.length != 0) {
+					    $("#form_group_formSocio_rut > div").html(json.formSocio_rut);
+					    $("#form_group_formSocio_rut > input").addClass("is-invalid");
 				    }
                 }
 				
 
-                if(json.formularioSociodemografico_nombres){
-                    if (json.formularioSociodemografico_nombres.length != 0) {
-					    $("#form_group_formularioSociodemografico_nombres > div").html(json.formularioSociodemografico_nombres);
-					    $("#form_group_formularioSociodemografico_nombres > input").addClass("is-invalid");
+                if(json.formSocio_nombres){
+                    if (json.formSocio_nombres.length != 0) {
+					    $("#form_group_formSocio_nombres > div").html(json.formSocio_nombres);
+					    $("#form_group_formSocio_nombres > input").addClass("is-invalid");
 				    }
                 }
                 
-                if(json.formularioSociodemografico_apellidos){
-                   if (json.formularioSociodemografico_apellidos.length != 0) {
-					    $("#form_group_formularioSociodemografico_apellidos > div").html(json.formularioSociodemografico_apellidos);
-					    $("#form_group_formularioSociodemografico_apellidos > input").addClass("is-invalid");
+                if(json.formSocio_apellidos){
+                   if (json.formSocio_apellidos.length != 0) {
+					    $("#form_group_formSocio_apellidos > div").html(json.formSocio_apellidos);
+					    $("#form_group_formSocio_apellidos > input").addClass("is-invalid");
 				    } 
                 }
                 
 
-                if(json.formularioSociodemografico_nacionalidad){
-                    if (json.formularioSociodemografico_nacionalidad.length != 0) {
-					    $("#form_group_formularioSociodemografico_nacionalidad > div").html(json.formularioSociodemografico_nacionalidad);
-    					$("#form_group_formularioSociodemografico_nacionalidad > input").addClass("is-invalid");
+                if(json.formSocio_nacionalidad){
+                    if (json.formSocio_nacionalidad.length != 0) {
+					    $("#form_group_formSocio_nacionalidad > div").html(json.formSocio_nacionalidad);
+    					$("#form_group_formSocio_nacionalidad > input").addClass("is-invalid");
 				    }
 
                 }
                 
-                if(json.formularioSociodemografico_edad){
-                    if (json.formularioSociodemografico_edad.length != 0) {
-					    $("#form_group_formularioSociodemografico_edad > div").html(json.formularioSociodemografico_edad);
-					    $("#form_group_formularioSociodemografico_edad > input").addClass("is-invalid");
+                if(json.formSocio_edad){
+                    if (json.formSocio_edad.length != 0) {
+					    $("#form_group_formSocio_edad > div").html(json.formSocio_edad);
+					    $("#form_group_formSocio_edad > input").addClass("is-invalid");
 				    }
                 }
                 
-                if(json.formularioSociodemografico_genero){
-                    if (json.formularioSociodemografico_genero.length != 0) {
-					    $("#form_group_formularioSociodemografico_genero > div").html(json.formularioSociodemografico_genero);
-					    $("#form_group_formularioSociodemografico_genero > label > input").addClass("is-invalid");
+                if(json.formSocio_genero){
+                    if (json.formSocio_genero.length != 0) {
+					    $("#form_group_formSocio_genero > div").html(json.formSocio_genero);
+					    $("#form_group_formSocio_genero > label > input").addClass("is-invalid");
 				    }
                 }
                 
-                if(json.formularioSociodemografico_carreraActual){
-                    if (json.formularioSociodemografico_carreraActual.length != 0) {
-					    $("#form_group_formularioSociodemografico_carreraActual > div").html(json.formularioSociodemografico_carreraActual);
-					    $("#form_group_formularioSociodemografico_carreraActual > label > input").addClass("is-invalid");
+                if(json.formSocio_carreraActual){
+                    if (json.formSocio_carreraActual.length != 0) {
+					    $("#form_group_formSocio_carreraActual > div").html(json.formSocio_carreraActual);
+					    $("#form_group_formSocio_carreraActual > label > input").addClass("is-invalid");
 				    }
                 }
 
-                if(json.formularioSociodemografico_carreraPrimeraOpcionSiNo){
-                   if (json.formularioSociodemografico_carreraPrimeraOpcionSiNo.length != 0) {
-					    $("#radioCarreraPrimeraOpcion").html(json.formularioSociodemografico_carreraPrimeraOpcionSiNo);
-					    $("#form_group_formularioSociodemografico_carreraPrimeraOpcionSiNo > div > label > input").addClass("is-invalid");
-				    } 
+                if(json.formSocio_carreraPrimeraOpcionSiNo){
+                   if (json.formSocio_carreraPrimeraOpcionSiNo.length != 0) {
+					    $("#radioCarreraPrimeraOpcion").html(json.formSocio_carreraPrimeraOpcionSiNo).show();
+					    $("#form_group_formSocio_carreraPrimeraOpcionSiNo > div > label > input").addClass("is-invalid");
+                        
+                    } 
                 }
                 
                 /** campo de texto que aparece opcionalmente */
-                if(json.formularioSociodemografico_carreraPrimeraOpcion){
-                    if (json.formularioSociodemografico_carreraPrimeraOpcion.length != 0) {
-					    $("#form_group_formularioSociodemografico_carreraPrimeraOpcion > div").html(json.formularioSociodemografico_carreraPrimeraOpcion);
-					    $("#form_group_formularioSociodemografico_carreraPrimeraOpcion > input").addClass("is-invalid");
+                if(json.formSocio_carreraPrimeraOpcion){
+                    if (json.formSocio_carreraPrimeraOpcion.length != 0) {
+					    $("#form_group_formSocio_carreraPrimeraOpcion > div").html(json.formSocio_carreraPrimeraOpcion);
+					    $("#form_group_formSocio_carreraPrimeraOpcion > input").addClass("is-invalid");
+					    $("#radioCarreraPrimeraOpcion").hide();
+
 				    }
                 }
 
-                if(json.formularioSociodemografico_convivencia){
-                    if (json.formularioSociodemografico_convivencia.length != 0) {
-					    $("#form_group_formularioSociodemografico_convivencia > div").html(json.formularioSociodemografico_convivencia);
-					    $("#form_group_formularioSociodemografico_convivencia > label > input").addClass("is-invalid");
+                if(json.formSocio_convivencia){
+                    if (json.formSocio_convivencia.length != 0) {
+					    $("#form_group_formSocio_convivencia > div").html(json.formSocio_convivencia);
+					    $("#form_group_formSocio_convivencia > label > input").addClass("is-invalid");
 				    }
                 }
 
-                if(json.formularioSociodemografico_tiempoDeTraslado){
-                    if (json.formularioSociodemografico_tiempoDeTraslado.length != 0) {
-					    $("#form_group_formularioSociodemografico_tiempoDeTraslado > div").html(json.formularioSociodemografico_tiempoDeTraslado);
-					    $("#form_group_formularioSociodemografico_tiempoDeTraslado > label > input").addClass("is-invalid");
+                /*if(json.formSocio_trayecto){
+                    if (json.formSocio_trayecto.length != 0) {
+					    $("#form_group_formSocio_trayecto > div").html(json.formSocio_trayecto);
+					    $("#form_group_formSocio_trayecto > label > input").addClass("is-invalid");
 				    }
                 }
+                */
+               
+               
                 
-                if(json.formularioSociodemografico_carreraDePrecedenciaSiNo){
-                    if (json.formularioSociodemografico_carreraDePrecedenciaSiNo.length != 0) {
-					    $("#radiocarreraDePrecedenciaSiNo").html(json.formularioSociodemografico_carreraDePrecedenciaSiNo);
-					    $("#form_group_formularioSociodemografico_carreraDePrecedenciaSiNo > div > label > input").addClass("is-invalid");
+                if(json.formSocio_carreraDePrecedenciaSiNo){
+                    if (json.formSocio_carreraDePrecedenciaSiNo.length != 0) {
+					    $("#radiocarreraDePrecedenciaSiNo").html(json.formSocio_carreraDePrecedenciaSiNo).show();
+					    $("#form_group_formSocio_carreraDePrecedenciaSiNo > div > label > input").addClass("is-invalid");
 				    }
                 }
 
-                if(json.formularioSociodemografico_carreraDePrecedenciaIngresar){
-                    if (json.formularioSociodemografico_carreraDePrecedenciaIngresar.length != 0) {
-					    $("#radiocarreraDePrecedenciaTexto").html(json.formularioSociodemografico_carreraDePrecedenciaIngresar);
-					    $("#formularioSociodemografico_carreraDePrecedenciaIngresar").addClass("is-invalid");
+                if(json.formSocio_carreraDePrecedenciaIngresar){
+                    if (json.formSocio_carreraDePrecedenciaIngresar.length != 0) {
+					    $("#radiocarreraDePrecedenciaTexto").html(json.formSocio_carreraDePrecedenciaIngresar);
+					    $("#formSocio_carreraDePrecedenciaIngresar").addClass("is-invalid");
 				    }
                 }
 
-                let radioRazonElegitCarreraActual=json.formularioSociodemografico_razonParaElegirLaCarreraActual;
+                let radioRazonElegitCarreraActual=json.formSocio_razonParaElegirLaCarreraActual;
                 
                 if(radioRazonElegitCarreraActual){
                     if (radioRazonElegitCarreraActual.length != 0) {
-					    $("#radioRazonParaElegirLaCarreraActual").html(radioRazonElegitCarreraActual);
-					    $("#form_group_formularioSociodemografico_razonParaElegirLaCarreraActual >label >input").addClass("is-invalid");
+					    $("#radioRazonParaElegirLaCarreraActual").html(radioRazonElegitCarreraActual).show();
+					    $("#form_group_formSocio_razonParaElegirLaCarreraActual >label >input").addClass("is-invalid");
 				    }
                 }
 
-                let textoRazonElegirCarrera=json.formularioSociodemografico_razonParaElegirLaCarreraActualIngresarMotivo;
+                let textoRazonElegirCarrera=json.formSocio_razonParaElegirLaCarreraActualIngresarMotivo;
                 
                 if(textoRazonElegirCarrera){
                     if (textoRazonElegirCarrera.length != 0) {
 					    $("#razonParaElegirLaCarreraActualOtroMotivo").html(textoRazonElegirCarrera);
-					    $("#formularioSociodemografico_razonParaElegirLaCarreraActualMotivo").addClass("is-invalid");
+					    $("#formSocio_razonParaElegirLaCarreraActualMotivo").addClass("is-invalid");
 				    }
                 }
 
-                let condicionMentalSiNoNose=json.formularioSociodemografico_condicionMentalDiagnosticadaSiNoNose;
+                let condicionMentalSiNoNose=json.formSocio_condicionMentalDiagnosticadaSiNoNose;
                 
                 if(condicionMentalSiNoNose){
                     if (condicionMentalSiNoNose.length != 0) {
-					    $("#radioCondicionMentalSiNoNose").html(condicionMentalSiNoNose);
-					    $("#form_group_formularioSociodemografico_condicionMentalDiagnosticadaSiNoNose > div > label > input").addClass("is-invalid");
+					    $("#radioCondicionMentalSiNoNose").html(condicionMentalSiNoNose).show();
+					    $("#form_group_formSocio_condicionMentalDiagnosticadaSiNoNose > div > label > input").addClass("is-invalid");
 				    }
                 }
 
-                let condicionMentalNombre=json.formularioSociodemografico_nombreDeCondicionMentalDiagnosticada;
+                let condicionMentalNombre=json.formSocio_nombreDeCondicionMentalDiagnosticada;
                 
                 if(condicionMentalNombre){
                     if (condicionMentalNombre.length != 0) {
-					    $("#form_group_formularioSociodemografico_nombreDeCondicionMentalDiagnosticada > div").html(condicionMentalNombre);
-					    $("#form_group_formularioSociodemografico_nombreDeCondicionMentalDiagnosticada > input").addClass("is-invalid");
+					    $("#form_group_formSocio_nombreDeCondicionMentalDiagnosticada > div").html(condicionMentalNombre);
+					    $("#form_group_formSocio_nombreDeCondicionMentalDiagnosticada > input").addClass("is-invalid");
 				    }
                 }
 
-                let beneficioGratuidad=json.formularioSociodemografico_beneficioGratuidadSiNo;
+                let beneficioGratuidad=json.formSocio_beneficioGratuidadSiNo;
                 
                 if(beneficioGratuidad){
                     if (beneficioGratuidad.length != 0) {
-					    $("#radioBeneficioDeGratuidad").html(condicionMentalNombre);
-					    $("#form_group_formularioSociodemografico_beneficioGratuidadSiNo >div>label > input").addClass("is-invalid");
+					    $("#radioBeneficioDeGratuidad").html(beneficioGratuidad).show();
+					    $("#form_group_formSocio_beneficioGratuidadSiNo >div>label > input").addClass("is-invalid");
 				    }
                 }
-
-                
-                
-                
-
-
 			},
 
 		},
 
 	});
-	ev.preventDefault();
+	
 });
 
     </script>
@@ -912,11 +908,3 @@ $(document).ready(function(){
 </html>
 
 
-<body>
-
-
-
-
-
-</body>
-</html>

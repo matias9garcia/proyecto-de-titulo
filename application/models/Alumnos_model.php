@@ -16,9 +16,10 @@ class Alumnos_model extends CI_Model {
 	}
     public function obtenerTodosLosAlumnos()
     {
-        $resultado = $this->db->query(" SELECT idUsuarios , rutUsuario, nombres, apellidos FROM usuarios WHERE rol = '2';" );
-        return $resultado;
+        return $this->db->query(" SELECT idUsuarios , rutUsuario, nombres, apellidos FROM usuarios WHERE rol = '3';" );
+         
     }
+
     
 
 }

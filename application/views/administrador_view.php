@@ -174,7 +174,7 @@
       <p class="h3">Lista de usuarios:</p>
 
 
-<table id="tablaAlumnos" class="display table" style="width:100%">
+<table id="tablaAdministradores" class="display table" style="width:100%">
     <thead>
         <tr>
             <th>id</th>
@@ -196,6 +196,19 @@
 
 </table>
 
+<table id="tablaAlumnos" class="display table" style="width:100%">
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>nombre usuario</th>
+            <th>Acciones</th>
+
+            
+        </tr>
+    </thead>
+
+</table>
+
    
     </div>
 
@@ -206,40 +219,23 @@
 
 $(document).ready(function(){
      $('#tablaAlumnos').DataTable({
+        destroy:true,
         
         ajax:{
-		    url: "<?= base_url("Administrador/Usuarios");?>",
+		        url: "<?= base_url("todosLosAlumnos");?>",
             type:"POST"
         },
+        language: {url:'<?= base_url("assets/datatables-Spanish.json");?>'},
         
-        "columns":[
+        columns:[
             {"data":"id"},
 
-            {"data":"nombreUsuarios"},
-            {"data":"Acciones"},
+            {"data":"nombreAlumnos"},
+            
+            {"defaultContent":  " <div class='btn-group'><button type='button' class='btn btn-secondary' >Reiniciar Contraseña</button><button type='button' class='btn btn-warning'>Bloquear Alumno</button></div> "}
+
         ],
-		language: {
-        processing:     "Procesando datos...",
-        search:         "Buscar:",
-        lengthMenu:    "Mostrar _MENU_ Alumnos",
-        info:           "Mostrando p&aacute;gina _START_ de _END_ paginas, _TOTAL_ elementos",
-        infoEmpty:      "Affichage de l'&eacute;lement 0 &agrave; 0 sur 0 &eacute;l&eacute;ments",
-        infoFiltered:   "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
-        infoPostFix:    "aaa",
-        loadingRecords: "Cargando datos...",
-        zeroRecords:    "Sin datos",
-        emptyTable:     "Sin datos",
-        paginate: {
-            first:      "Primero",
-            previous:   "Anterior",
-            next:       "Siguiente",
-            last:       "&Uacute;ltimo"
-        },
-        aria: {
-            sortAscending:  ": activer pour trier la colonne par ordre croissant",
-            sortDescending: ": activer pour trier la colonne par ordre décroissant"
-        }
-    }
+		
      });
 
 
@@ -251,34 +247,15 @@ $(document).ready(function(){
             type:"POST"
         },
         
-        "columns":[
+        columns:[
             {"data":"id"},
 
             {"data":"nombreUsuarios"},
-            {"data":"Acciones"},
+            
+            {"defaultContent":  " <div class='btn-group'><button type='button' class='btn btn-secondary' >Reiniciar Contraseña</button><button type='button' class='btn btn-warning'>Bloquear Alumno</button></div> "}
+
         ],
-		language: {
-        processing:     "Procesando datos...",
-        search:         "Buscar:",
-        lengthMenu:    "Mostrar _MENU_ Coordinadores",
-        info:           "Mostrando p&aacute;gina _START_ de _END_ paginas, _TOTAL_ elementos",
-        infoEmpty:      "Affichage de l'&eacute;lement 0 &agrave; 0 sur 0 &eacute;l&eacute;ments",
-        infoFiltered:   "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
-        infoPostFix:    "",
-        loadingRecords: "Cargando datos...",
-        zeroRecords:    "Aucun &eacute;l&eacute;ment &agrave; afficher",
-        emptyTable:     "Aucune donnée disponible dans le tableau",
-        paginate: {
-            first:      "Primero",
-            previous:   "Anterior",
-            next:       "Siguiente",
-            last:       "&Uacute;ltimo"
-        },
-        aria: {
-            sortAscending:  ": activer pour trier la colonne par ordre croissant",
-            sortDescending: ": activer pour trier la colonne par ordre décroissant"
-        }
-    }
+		language: {url:'<?= base_url("assets/datatables-Spanish.json");?>'}
      });
         
         });

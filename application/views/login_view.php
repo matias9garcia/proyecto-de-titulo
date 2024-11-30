@@ -84,7 +84,7 @@
 		$("#formulario_login").submit(function (ev) {
 
 
-	$("#mensajeDeAlerta").html("");
+	//$("#mensajeDeAlerta").html("");
 	
 	$.ajax({
 		url: "login",

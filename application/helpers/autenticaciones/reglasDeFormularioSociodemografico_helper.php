@@ -1,5 +1,5 @@
 <?php
-function getReglasDeFormularioSociodemografico(){
+function getReglasDeformSocio(){
     $formatoNoCompatible="El formato no es compatible";
     $debeElegirUnaOpcion="Debe elegir una opción";
     $campoRequerido="Este campo es requerido";
@@ -11,7 +11,7 @@ function getReglasDeFormularioSociodemografico(){
     return  array(
 
         /**campo rut */
-        array(  'field' => 'formularioSociodemografico_rut',
+        array(  'field' => 'formSocio_rut',
             /**trim quita los espacios antes y despues del input ingresado
              * regex_match compara lo ingresado con la expresion regular
              */
@@ -22,7 +22,7 @@ function getReglasDeFormularioSociodemografico(){
             )
         ),
         /**campo nombres */
-        array(  'field' => 'formularioSociodemografico_nombres',
+        array(  'field' => 'formSocio_nombres',
             /**trim quita los espacios antes y despues del input ingresado
              * regex_match compara lo ingresado con la expresion regular
              */
@@ -34,7 +34,7 @@ function getReglasDeFormularioSociodemografico(){
             )
         ),
         /**campo apeliddos */
-        array(  'field' => 'formularioSociodemografico_apellidos',
+        array(  'field' => 'formSocio_apellidos',
             /**trim quita los espacios antes y despues del input ingresado
              * regex_match compara lo ingresado con la expresion regular
              */
@@ -45,7 +45,7 @@ function getReglasDeFormularioSociodemografico(){
             )
         ),
         /**campo nacionalidad */
-        array(  'field' => 'formularioSociodemografico_nacionalidad',
+        array(  'field' => 'formSocio_nacionalidad',
             /**trim quita los espacios antes y despues del input ingresado
              * regex_match compara lo ingresado con la expresion regular
              */
@@ -56,7 +56,7 @@ function getReglasDeFormularioSociodemografico(){
             )
         ),
         /**campo edad */
-        array(  'field' => 'formularioSociodemografico_edad',
+        array(  'field' => 'formSocio_edad',
             /**trim quita los espacios antes y despues del input ingresado
              * regex_match compara lo ingresado con la expresion regular
              */
@@ -70,7 +70,7 @@ function getReglasDeFormularioSociodemografico(){
          * 3 opciones
          * 
          */
-        array(  'field' => 'formularioSociodemografico_genero',
+        array(  'field' => 'formSocio_genero',
             /**trim quita los espacios antes y despues del input ingresado
              * regex_match compara lo ingresado con la expresion regular
              */
@@ -82,7 +82,7 @@ function getReglasDeFormularioSociodemografico(){
         ),
         /**campo carrera actual */
         array(  
-                'field' => 'formularioSociodemografico_carreraActual',
+                'field' => 'formSocio_carreraActual',
             /**trim quita los espacios antes y despues del input ingresado
              * regex_match compara lo ingresado con la expresion regular
              */
@@ -94,7 +94,7 @@ function getReglasDeFormularioSociodemografico(){
         ),
         
         array(  
-                'field' => 'formularioSociodemografico_carreraPrimeraOpcionSiNo',
+                'field' => 'formSocio_carreraPrimeraOpcionSiNo',
             /**trim quita los espacios antes y despues del input ingresado
              * regex_match compara lo ingresado con la expresion regular
              */
@@ -109,7 +109,7 @@ function getReglasDeFormularioSociodemografico(){
          * 
          */
         array(  
-                'field' => 'formularioSociodemografico_carreraPrimeraOpcion',
+                'field' => 'formSocio_carreraPrimeraOpcion',
             /**trim quita los espacios antes y despues del input ingresado
              * regex_match compara lo ingresado con la expresion regular
              */
@@ -122,7 +122,7 @@ function getReglasDeFormularioSociodemografico(){
 
         /**opciones de convivencia */
         array(  
-                'field' => 'formularioSociodemografico_convivencia',
+                'field' => 'formSocio_convivencia',
             /**trim quita los espacios antes y despues del input ingresado
              * regex_match compara lo ingresado con la expresion regular
              */
@@ -135,11 +135,11 @@ function getReglasDeFormularioSociodemografico(){
 
         /**opciones de tiempo de traslado */
         array(  
-                'field' => 'formularioSociodemografico_tiempoDeTraslado',
+                'field' => 'formSocio_trayecto',
             /**trim quita los espacios antes y despues del input ingresado
              * regex_match compara lo ingresado con la expresion regular
              */
-                'rules' => 'trim|required|regex_match[/^<30$|^=30$|^>30$|^>60$/]',
+                'rules' => 'trim|required|regex_match[/^menos30$|^igual30$|^mas30$|^masHora$/]',
                 'errors'=> array(
                 'required' => $debeElegirUnaOpcion,
                 'regex_match' => $formatoNoCompatible,
@@ -147,7 +147,7 @@ function getReglasDeFormularioSociodemografico(){
         ),
         /**opciones de carrera de presedencia */
         array(  
-                'field' => 'formularioSociodemografico_carreraDePrecedenciaSiNo',
+                'field' => 'formSocio_carreraDePrecedenciaSiNo',
             /**trim quita los espacios antes y despues del input ingresado
              * regex_match compara lo ingresado con la expresion regular
              */
@@ -161,7 +161,7 @@ function getReglasDeFormularioSociodemografico(){
          * nombre de la carrera de la que proviene el encuestado
          */
         array(  
-                'field' => 'formularioSociodemografico_carreraDePrecedenciaIngresar',
+                'field' => 'formSocio_carreraDePrecedenciaIngresar',
             /**trim quita los espacios antes y despues del input ingresado
              * regex_match compara lo ingresado con la expresion regular
              */
@@ -173,7 +173,7 @@ function getReglasDeFormularioSociodemografico(){
         ),
 
         array(  
-                'field' => 'formularioSociodemografico_razonParaElegirLaCarreraActual',
+                'field' => 'formSocio_razonParaElegirLaCarreraActual',
             /**trim quita los espacios antes y despues del input ingresado
              * regex_match compara lo ingresado con la expresion regular
              */
@@ -185,7 +185,7 @@ function getReglasDeFormularioSociodemografico(){
         ),
 
         array(  
-                'field' => 'formularioSociodemografico_razonParaElegirLaCarreraActualIngresarMotivo',
+                'field' => 'formSocio_razonParaElegirLaCarreraActualIngresarMotivo',
             /**trim quita los espacios antes y despues del input ingresado
              * regex_match compara lo ingresado con la expresion regular
              */
@@ -196,7 +196,7 @@ function getReglasDeFormularioSociodemografico(){
             )
         ),
         array(  
-                'field' => 'formularioSociodemografico_condicionMentalDiagnosticadaSiNoNose',
+                'field' => 'formSocio_condicionMentalDiagnosticadaSiNoNose',
             /**trim quita los espacios antes y despues del input ingresado
              * regex_match compara lo ingresado con la expresion regular
              */
@@ -207,18 +207,18 @@ function getReglasDeFormularioSociodemografico(){
             )
         ),
         array(  
-                'field' => 'formularioSociodemografico_nombreDeCondicionMentalDiagnosticada',
+                'field' => 'formSocio_nombreDeCondicionMentalDiagnosticada',
             /**trim quita los espacios antes y despues del input ingresado
              * regex_match compara lo ingresado con la expresion regular
              */
                 'rules' => 'trim|required|regex_match[/^[a-zA-ZñÑáéíóúÁÉÍÓÚ/\s]+$/]',
                 'errors'=> array(
-                'required' => 'Este campo es requerido',
+                'required' => $campoRequerido,
                 'regex_match' => $formatoNoCompatible,
             )
         ),
         array(  
-                'field' => 'formularioSociodemografico_beneficioGratuidadSiNo',
+                'field' => 'formSocio_beneficioGratuidadSiNo',
             /**trim quita los espacios antes y despues del input ingresado
              * regex_match compara lo ingresado con la expresion regular
              */
