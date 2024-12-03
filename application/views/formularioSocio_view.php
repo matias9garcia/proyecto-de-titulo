@@ -217,7 +217,7 @@
                 * Género:
             </p>
 
-            <select id="formSocio_genero" name="formSocio_genero">
+            <select id="select_formSocio_genero" name="formSocio_genero">
 
     <option value="NULL">Seleccione su género</option>
     <option value="femenino">Femenino</option>
@@ -244,7 +244,7 @@
                 * Seleccionar su carrera actual:
             </p>
             
-            <select id="formSocio_carreraActual" name="formSocio_carreraActual">
+            <select id="select_formSocio_carreraActual" name="formSocio_carreraActual">
 
     <option value="NULL">Seleccionar su carrera actual</option>
     <option value="ingCivilInf">Ingeniería Civil en Informática</option>
@@ -335,7 +335,7 @@
                 * ¿Con quién vive?
             </p>
             
-            <select id="formSocio_convivencia" name="formSocio_convivencia">
+            <select id="select_formSocio_convivencia" name="formSocio_convivencia">
 
     <option value="NULL">Seleccionar su convivencia</option>
     <option value="familia">Con mi familia</option>
@@ -362,7 +362,7 @@
             </p>
         
 
-        <select id="formSocio_trayecto" name="formSocio_trayecto">
+        <select id="select_formSocio_trayecto" name="formSocio_trayecto">
 
     <option value="NULL">Seleccionar su tiempo de trayecto</option>
     <option value="menos30">Menos de 30 minutos</option>
@@ -381,9 +381,11 @@
         
     <section class="row">
         <div    class="col-md-4 form-group"
-                id="form_group_formSocio_carreraDePrecedenciaSiNo"><!--form-control-->
+                id="form_group_formSocio_carreraDePrecedenciaSiNo"
+                name="form_group_formSocio_carreraDePrecedenciaSiNo"
+                ><!--form-control-->
             
-            <p id="formSocio_carreraDePrecedenciaSiNo">
+            <p>
                 *¿Provienes de otra carrera? 
             </p>
 
@@ -729,44 +731,78 @@ $(document).ready(function(){
             ev.preventDefault();
 	//$("#mensajeDeAlerta").html("");
 
+    //esto lo agregué yo porque no se estaba recogiendo correctamente el JSON de cada input
+    let datos_del_formulario = {
+        formSocio_rut: $("#formSocio_rut").val(),
+        formSocio_nombres: $("#formSocio_nombres").val(),
+        formSocio_apellidos: $("#formSocio_apellidos").val(),
+        formSocio_nacionalidad: $("#formSocio_nacionalidad").val(),
+        formSocio_edad: $("#formSocio_edad").val(),
+        formSocio_genero: $("#select_formSocio_genero").val(),
+        formSocio_carreraActual: $("#select_formSocio_carreraActual").val(),
+        formSocio_carreraPrimeraOpcionSiNo: $("input[name='formSocio_carreraDePrecedenciaSiNo']:checked").val(),
+        formSocio_CualFueSuPrimeraCarrera: $("#formSocio_carreraPrimeraOpcionIngresar").val(),
+        formSocio_convivencia: $("#select_formSocio_convivencia").val(),
+        formSocio_trayecto: $("#select_formSocio_trayecto").val(),
+        formSocio_carreraDePrecedenciaSiNo: $("input[name='formSocio_carreraDePrecedenciaSiNo']:checked").val(),
+        formSocio_CualFueCarreraDePrecedencia: $("#formSocio_carreraDePrecedenciaIngresar").val(),
+        formSocio_razonParaElegirLaCarreraActual: $("input[name='formSocio_razonParaElegirLaCarreraActual']:checked").val(),
+        formSocio_otraRazonParaElegirLaCarreraActual: $("#formSocio_razonParaElegirLaCarreraActualMotivo").val(),
+        formSocio_condicionMentalDiagnosticadaSiNoNose: $("input[name='formSocio_condicionMentalDiagnosticadaSiNoNose']:checked").val(),
+        formSocio_beneficioGratuidadSiNo: $("input[name='formSocio_beneficioGratuidadSiNo']:checked").val(),
+    };
+
+    let jsonData = JSON.stringify(datos_del_formulario);
+
 	$.ajax({
 		url: "<?= base_url('validarFormularioSocio');?>",
-		type: "post",
-		data: $(this).serialize(),
-		success: function (err) {
-			var json = JSON.parse(err);
-			console.log(json);
-			//alert(json.url);
-			//window.location.replace(json.url);
-		},
+		type: "POST",
+        contentType: "application/json", // Indica que envías JSON
+        data: jsonData, // Enviar JSON
+        success: function (response) {
+            console.log("Respuesta del servidor:", response);
+            if (response.success) {
+                alert("Alumno insertado correctamente.");
+            } else {
+                alert("Error al insertar el alumno: " + response.message);
+            }
+        },
+
+        error: function (xhr, status, error) {
+            console.error("Error:", error);
+            alert("Ocurrió un error al procesar la solicitud.");
+        },
         
 		statusCode: {
 			400: function (xhr) {
                 var respuesta=xhr.responseText;
 				var json = JSON.parse(respuesta);
+                //console.log(data);
+                return;
 
 				$("input").removeClass("is-invalid");
 				//$("#form_group_contrasena > input").removeClass("is-invalid");
 
-				console.log(json);
-                console.log(json.formSocio_rut)
+				
 				if(json.formSocio_rut){
                     if (toString(json.formSocio_rut).length != 0) {
 					    $("#form_group_formSocio_rut > div").html(json.formSocio_rut);
 					    $("#form_group_formSocio_rut > input").addClass("is-invalid");
+                        console.log(json);
+                        console.log(json.formSocio_rut)
 				    }
                 }
 				
 
                 if(json.formSocio_nombres){
-                    if (json.formSocio_nombres.length != 0) {
+                    if (toString(json.formSocio_nombres.length) != 0) {
 					    $("#form_group_formSocio_nombres > div").html(json.formSocio_nombres);
 					    $("#form_group_formSocio_nombres > input").addClass("is-invalid");
 				    }
                 }
                 
                 if(json.formSocio_apellidos){
-                   if (json.formSocio_apellidos.length != 0) {
+                   if (toString(json.formSocio_apellidos.length) != 0) {
 					    $("#form_group_formSocio_apellidos > div").html(json.formSocio_apellidos);
 					    $("#form_group_formSocio_apellidos > input").addClass("is-invalid");
 				    } 
@@ -774,7 +810,7 @@ $(document).ready(function(){
                 
 
                 if(json.formSocio_nacionalidad){
-                    if (json.formSocio_nacionalidad.length != 0) {
+                    if (toString(json.formSocio_nacionalidad).length != 0) {
 					    $("#form_group_formSocio_nacionalidad > div").html(json.formSocio_nacionalidad);
     					$("#form_group_formSocio_nacionalidad > input").addClass("is-invalid");
 				    }
@@ -782,28 +818,28 @@ $(document).ready(function(){
                 }
                 
                 if(json.formSocio_edad){
-                    if (json.formSocio_edad.length != 0) {
+                    if (toString(json.formSocio_edad).length != 0) {
 					    $("#form_group_formSocio_edad > div").html(json.formSocio_edad);
 					    $("#form_group_formSocio_edad > input").addClass("is-invalid");
 				    }
                 }
                 
                 if(json.formSocio_genero){
-                    if (json.formSocio_genero.length != 0) {
+                    if (toString(json.formSocio_genero).length != 0) {
 					    $("#form_group_formSocio_genero > div").html(json.formSocio_genero);
 					    $("#form_group_formSocio_genero > label > input").addClass("is-invalid");
 				    }
                 }
                 
                 if(json.formSocio_carreraActual){
-                    if (json.formSocio_carreraActual.length != 0) {
+                    if (toString(json.formSocio_carreraActual).length != 0) {
 					    $("#form_group_formSocio_carreraActual > div").html(json.formSocio_carreraActual);
 					    $("#form_group_formSocio_carreraActual > label > input").addClass("is-invalid");
 				    }
                 }
 
                 if(json.formSocio_carreraPrimeraOpcionSiNo){
-                   if (json.formSocio_carreraPrimeraOpcionSiNo.length != 0) {
+                   if (toString(json.formSocio_carreraPrimeraOpcionSiNo).length != 0) {
 					    $("#radioCarreraPrimeraOpcion").html(json.formSocio_carreraPrimeraOpcionSiNo).show();
 					    $("#form_group_formSocio_carreraPrimeraOpcionSiNo > div > label > input").addClass("is-invalid");
                         
@@ -812,7 +848,7 @@ $(document).ready(function(){
                 
                 /** campo de texto que aparece opcionalmente */
                 if(json.formSocio_carreraPrimeraOpcion){
-                    if (json.formSocio_carreraPrimeraOpcion.length != 0) {
+                    if (toString(json.formSocio_carreraPrimeraOpcion).length != 0) {
 					    $("#form_group_formSocio_carreraPrimeraOpcion > div").html(json.formSocio_carreraPrimeraOpcion);
 					    $("#form_group_formSocio_carreraPrimeraOpcion > input").addClass("is-invalid");
 					    $("#radioCarreraPrimeraOpcion").hide();
@@ -821,7 +857,7 @@ $(document).ready(function(){
                 }
 
                 if(json.formSocio_convivencia){
-                    if (json.formSocio_convivencia.length != 0) {
+                    if (toString(json.formSocio_convivencia).length != 0) {
 					    $("#form_group_formSocio_convivencia > div").html(json.formSocio_convivencia);
 					    $("#form_group_formSocio_convivencia > label > input").addClass("is-invalid");
 				    }
@@ -838,14 +874,14 @@ $(document).ready(function(){
                
                 
                 if(json.formSocio_carreraDePrecedenciaSiNo){
-                    if (json.formSocio_carreraDePrecedenciaSiNo.length != 0) {
+                    if (toString(json.formSocio_carreraDePrecedenciaSiNo).length != 0) {
 					    $("#radiocarreraDePrecedenciaSiNo").html(json.formSocio_carreraDePrecedenciaSiNo).show();
 					    $("#form_group_formSocio_carreraDePrecedenciaSiNo > div > label > input").addClass("is-invalid");
 				    }
                 }
 
                 if(json.formSocio_carreraDePrecedenciaIngresar){
-                    if (json.formSocio_carreraDePrecedenciaIngresar.length != 0) {
+                    if (toString(json.formSocio_carreraDePrecedenciaIngresar).length != 0) {
 					    $("#radiocarreraDePrecedenciaTexto").html(json.formSocio_carreraDePrecedenciaIngresar);
 					    $("#formSocio_carreraDePrecedenciaIngresar").addClass("is-invalid");
 				    }
@@ -854,7 +890,7 @@ $(document).ready(function(){
                 let radioRazonElegitCarreraActual=json.formSocio_razonParaElegirLaCarreraActual;
                 
                 if(radioRazonElegitCarreraActual){
-                    if (radioRazonElegitCarreraActual.length != 0) {
+                    if (toString(radioRazonElegitCarreraActual).length != 0) {
 					    $("#radioRazonParaElegirLaCarreraActual").html(radioRazonElegitCarreraActual).show();
 					    $("#form_group_formSocio_razonParaElegirLaCarreraActual >label >input").addClass("is-invalid");
 				    }
@@ -863,7 +899,7 @@ $(document).ready(function(){
                 let textoRazonElegirCarrera=json.formSocio_razonParaElegirLaCarreraActualIngresarMotivo;
                 
                 if(textoRazonElegirCarrera){
-                    if (textoRazonElegirCarrera.length != 0) {
+                    if (toString(textoRazonElegirCarrera).length != 0) {
 					    $("#razonParaElegirLaCarreraActualOtroMotivo").html(textoRazonElegirCarrera);
 					    $("#formSocio_razonParaElegirLaCarreraActualMotivo").addClass("is-invalid");
 				    }
@@ -872,7 +908,7 @@ $(document).ready(function(){
                 let condicionMentalSiNoNose=json.formSocio_condicionMentalDiagnosticadaSiNoNose;
                 
                 if(condicionMentalSiNoNose){
-                    if (condicionMentalSiNoNose.length != 0) {
+                    if (toString(condicionMentalSiNoNose).length != 0) {
 					    $("#radioCondicionMentalSiNoNose").html(condicionMentalSiNoNose).show();
 					    $("#form_group_formSocio_condicionMentalDiagnosticadaSiNoNose > div > label > input").addClass("is-invalid");
 				    }
@@ -881,7 +917,7 @@ $(document).ready(function(){
                 let condicionMentalNombre=json.formSocio_nombreDeCondicionMentalDiagnosticada;
                 
                 if(condicionMentalNombre){
-                    if (condicionMentalNombre.length != 0) {
+                    if (toString(condicionMentalNombre).length != 0) {
 					    $("#form_group_formSocio_nombreDeCondicionMentalDiagnosticada > div").html(condicionMentalNombre);
 					    $("#form_group_formSocio_nombreDeCondicionMentalDiagnosticada > input").addClass("is-invalid");
 				    }
@@ -890,9 +926,9 @@ $(document).ready(function(){
                 let beneficioGratuidad=json.formSocio_beneficioGratuidadSiNo;
                 
                 if(beneficioGratuidad){
-                    if (beneficioGratuidad.length != 0) {
+                    if (toString(beneficioGratuidad).length != 0) {
 					    $("#radioBeneficioDeGratuidad").html(beneficioGratuidad).show();
-					    $("#form_group_formSocio_beneficioGratuidadSiNo >div>label > input").addClass("is-invalid");
+					    $("#form_group_formSocio_beneficioGratuidadSiNo > div > label > input").addClass("is-invalid");
 				    }
                 }
 			},
