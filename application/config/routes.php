@@ -95,6 +95,7 @@ $route['FormularioSocio'] = 'Alumno_controller/formulario';
 
 $route['FormularioPreguntas'] = 'Alumno_controller';
 
+// es necesario validarFormularioSocio? No se pueden subir los datos a la BD altiro?
 $route['validarFormularioSocio'] = 'Alumno_controller/validarFormularioSociodemografico';
 
 $route['validarCuestionarioMSLQ'] = 'Alumno_controller/validarMSLQ';

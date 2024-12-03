@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-
         <?php $this->load->view("componentes/Bootstrap_view");?>
 
         <?php $this->load->view("componentes/jQuery_view");?>
@@ -105,7 +104,7 @@
 				$("#form_group_rut > input").removeClass("is-invalid");
 				$("#form_group_contrasena > input").removeClass("is-invalid");
 
-				console.log(json);
+				//console.log(json);
 				if (json.login_rut.length != 0) {
 					$("#form_group_rut > div").html(json.login_rut);
 					$("#form_group_rut > input").addClass("is-invalid");

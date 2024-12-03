@@ -749,8 +749,9 @@ $(document).ready(function(){
 				//$("#form_group_contrasena > input").removeClass("is-invalid");
 
 				console.log(json);
+                console.log(json.formSocio_rut)
 				if(json.formSocio_rut){
-                    if (json.formSocio_rut.length != 0) {
+                    if (toString(json.formSocio_rut).length != 0) {
 					    $("#form_group_formSocio_rut > div").html(json.formSocio_rut);
 					    $("#form_group_formSocio_rut > input").addClass("is-invalid");
 				    }

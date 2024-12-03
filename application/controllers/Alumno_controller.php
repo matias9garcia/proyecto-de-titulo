@@ -281,7 +281,7 @@ class Alumno_controller extends CI_Controller {
 
          $formSocio_beneficioGratuidadSiNo = $this->input->post("formSocio_beneficioGratuidadSiNo");
 
-     
+     print("HOLAAA LLEGUE ACA");
 echo json_encode($formSocio_rut);
 		}
 
