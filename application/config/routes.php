@@ -82,7 +82,6 @@ $route['Dashboard/Administrador'] = 'Administrador_controler';
 
 $route['Dashboard/Coordinador'] = 'Coordinador_controller';
 
-
 $route['todosLosAlumnos'] = 'Coordinador_controller/mostrarAlumnos';
 
 $route['ingresarAlumno'] = 'Coordinador_controller/insertarAlumno';
@@ -99,6 +98,7 @@ $route['FormularioPreguntas'] = 'Alumno_controller';
 $route['validarFormularioSocio'] = 'Alumno_controller/validarFormularioSociodemografico';
 
 $route['validarCuestionarioMSLQ'] = 'Alumno_controller/validarMSLQ';
+$route['registrarRespuestaCuestionarioMSLQ'] = 'Alumno_controller/registrar_respuesta_formulario_mslq';
 
 
 

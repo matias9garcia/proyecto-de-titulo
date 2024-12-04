@@ -111,7 +111,7 @@ $reglasDeValidacionLogin	=	getReglasDeLogin();
 				'apellidos' => $resultado->apellidos
 		    );
 
-
+			// REVISAR PARA PASAR
 			$this->session->set_userdata($data);//se crea la sesion
 
 			$mensaje = array( "url" => base_url( $paginaUsuario ) );

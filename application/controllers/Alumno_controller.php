@@ -113,6 +113,13 @@ class Alumno_controller extends CI_Controller {
 		// return;
 
 		// Llamar al modelo para insertar en la BD un nuevo formulario sociodemografico
+
+		// Guardar en la sesión
+		// session(['rut' => $data['formSocio_rut']]);
+		//$rut = session('rut');
+
+		
+
         $resultado = $this->Alumnos_model->insertarNuevaRespuestaFormSocioDemografico($data);
 
 		
@@ -315,9 +322,29 @@ class Alumno_controller extends CI_Controller {
 
 // 		echo json_encode($formSocio_rut);
 // 		}
-
    
-    }
+    	}
 
+		public function registrar_respuesta_formulario_mslq()
+		{
+
+			// Recoger los datos del POST como JSON
+			$data = json_decode(file_get_contents("php://input"), true);
+
+			$rut_usuario = $this->session->userdata('rut');
+			$data['rut_usuario'] = $rut_usuario;
+			
+			// Llamar al modelo para insertar en la BD un nuevo formulario sociodemografico
+			$resultado = $this->Alumnos_model->insertarNuevaRespuestaFormMSLQ($data);
+
+			// // Responder al cliente
+			if ($resultado) {
+				// Cargar la vista para pasar al siguiente formulario
+				echo json_encode(['success' => true, 'message' => 'Nueva respuesta insertada exitosamente']);
+			} else {
+				echo json_encode(['success' => false, 'message' => 'Error al insertar el alumno.']);
+			};
+
+		}
 
 }
