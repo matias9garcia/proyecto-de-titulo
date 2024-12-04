@@ -54,7 +54,7 @@
 
                       <div class="modal-header">
 
-                          <h4 class="modal-title">Registrar  datos de alumno</h4>
+                          <h4 class="modal-title">Registrar RUT de alumno</h4>
                           
                           <!--BOTON CERRAR MODAL( X )-->
                           
@@ -65,10 +65,10 @@
                       <!-- Modal body -->
                       
                       <div class="modal-body">
-                        <form id="ingresarAlumno" method="post" action="<?= base_url("ingresarAlumno");?>">
+                        <form id="ingresarAlumno" method="post" action="<?= base_url("ingresarAlumno");?>"></form>
 
                         <label for="ingresarRUT">RUT Alumno:</label>
-                        <input id="ingresarRUT" name="alumnoRUT" type="text"><br>
+                        <input id="ingresarRUT" name="rutUsuario" type="text" form="ingresarAlumno"><br>
                         
                       </div>
       
@@ -81,12 +81,12 @@
                               
                        
                             
-                              <input type="submit" class="btn btn-success" value="Enviar">
+                              <input type="submit" class="btn btn-success" value="Enviar" form="ingresarAlumno">
                               
                               <button type="button" class="btn btn-muted border border-2 border-gray bg-light" data-bs-dismiss="modal">Cancelar</button>
                           
                           </div>
-                      </form>
+                      
                       </div>
 
                   </div>
@@ -161,7 +161,8 @@
         <thead>
             <tr>
                 <th>Id</th>   
-                <th>Nombre</th>   
+                <th>Nombre</th>
+                <th>Rut</th>   
                 <th>Acciones</th>   
 
             </tr>
@@ -197,7 +198,9 @@
     </div>
 
 
+
 <script>
+
 $(document).ready(function(){
 
 listarTabla();
@@ -218,6 +221,7 @@ var listarTabla = function(){
                 {"data":"id"},
 
                 {"data":"nombreAlumnos"},
+                {"data":"rutUsuario"},
                 //{"data":"Acciones"},
                 {"defaultContent":  " <div class='btn-group'><button type='button' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#myModal'>Ver reporte</button><button type='button' class='btn btn-warning'>Bloquear Alumno</button></div> "}
 
@@ -245,63 +249,47 @@ let obtenerDatosEditar = function(tbody, table)
 </script>
 
 
-<script>
 
-		$("#ingresarAlumno").submit(function (ev) {
+  <script>
+  
+  $("#ingresarAlumno").submit(  function(ev){
+    ev.preventDefault();
 
-
-	//$("#mensajeDeAlerta").html("");
+	  $.ajax({
+      
+      url: "<?= base_url("ingresarAlumno");?>",
+	  	type: "post",
+      
+	  	data: $(this).serialize(),
+      
+	  	success: function (err) 
+          {
+            alert("exito");
+	  		//var json = JSON.parse(err);
+	  		//console.log(json);
+          
+	  		//alert(json);
+	  		//window.location.replace(json.url);
+	  	},
+	  	statusCode: 
+          {
+	  		400: function (xhr) {
+	  			var json = JSON.parse(xhr.responseText);
+              
+              
+	  			console.log(json);
+              
+	  		},
+          
+          
+	  	},
+	  });
 	
-	$.ajax({
-		url: "ingresarAlumno",
-		type: "post",
-
-		data: $(this).serialize(),
-		success: function (err) {
-			var json = JSON.parse(err);
-			//console.log(json);
-			
-			alert(json.url);
-			window.location.replace(json.url);
-		},
-		statusCode: {
-			400: function (xhr) {
-				var json = JSON.parse(xhr.responseText);
-
-				$("#form_group_rut > input").removeClass("is-invalid");
-				$("#form_group_contrasena > input").removeClass("is-invalid");
-
-				console.log(json);
-				if (json.login_rut.length != 0) {
-					$("#form_group_rut > div").html(json.login_rut);
-					$("#form_group_rut > input").addClass("is-invalid");
-				}
-
-				if (json.login_contrasena.length != 0) {
-					$("#form_group_contrasena > div").html(json.login_contrasena);
-					$("#form_group_contrasena > input").addClass("is-invalid");
-				}
-			},
-
-			401: function (xhr) {
-				var json = JSON.parse(xhr.responseText);
-
-				console.log(json);
-
-				$("#mensajeDeAlerta").html(
-					'<div class="alert alert-warning">' +
-						json.mensajeDeCredeciales +
-						"</div>"
-				);
-			},
-		},
-	});
-	ev.preventDefault();
 	});
 
+    </script>
 
 
-	</script>
 
 </body>
 </html>

@@ -66,16 +66,18 @@
                       <!-- Modal body -->
                       
                       <div class="modal-body">
-                        <form action="<?= base_url("");?>">
+                        <form id="formIngresarCoordinador"
+                               method="post"
+                                action="<?= base_url("Administrador/IngresarNuevoCoordinador");?>"></form>
 
                         <label for="ingresarRUT">RUT coordinador:</label>
-                        <input id="ingresarRUT" name="coordinadorRUT" type="text"><br>
+                        <input id="ingresarRUT" name="rutUsuario" type="text" form="formIngresarCoordinador"><br>
 
                         <label for="nombreCoordinador">Nombres:</label>
-                        <input id="nombreCoordinador" name="coordinadorNombres" type="text"><br>
+                        <input id="nombreCoordinador" name="nombresUsuario" type="text" form="formIngresarCoordinador"><br>
 
                         <label for="apellidosCoordinador">Apellidos:</label>
-                        <input id="apellidosCoordinador" name="coordinadorApellidos" type="text"><br>
+                        <input id="apellidosCoordinador" name="apellidosUsuario" type="text" form="formIngresarCoordinador"><br>
 
                         
 
@@ -91,12 +93,12 @@
                               
                        
                             
-                              <input type="submit" class="btn btn-success" value="Enviar">
+                              <input type="submit" class="btn btn-success" value="Enviar" form="formIngresarCoordinador">
                               
                               <button type="button" class="btn btn-muted border border-2 border-gray bg-light" data-bs-dismiss="modal">Cancelar</button>
                           
                           </div>
-                      </form>
+                      
                       </div>
 
                   </div>
@@ -163,11 +165,12 @@
 
         <h1>Administrador_controller</h1>
 
-<?php $nombres="nombres";
-      $apellidos="apellidos";?>
+
+
+<?php $nombreUsuario = strtoupper($this->session->userdata("nombres")."  ".$this->session->userdata("apellidos"));?> 
 	
 
-      <p class="h3">Nombre de admin: <?=$nombres." ".$apellidos?></p>
+      <p class="h3">Nombre de admin: <b class="h6"><?=$nombreUsuario?></b></p>
       <p class="h3">Correo electrónico:</p>
 
 
@@ -218,6 +221,28 @@
 
 
 $(document).ready(function(){
+
+
+  $('#tablaCoordinadores').DataTable({
+        
+        ajax:{
+		    url: "<?= base_url("Usuarios");?>",
+            type:"POST"
+        },
+        
+        columns:[
+            {"data":"id"},
+
+            {"data":"nombreUsuarios"},
+            
+            {"defaultContent":  " <div class='btn-group'><button type='button' class='btn btn-secondary' >Reiniciar Contraseña</button><button type='button' class='btn btn-warning'>Bloquear Alumno</button></div> "}
+
+        ],
+		language: {url:'<?= base_url("assets/datatables-Spanish.json");?>'}
+     });
+
+
+
      $('#tablaAlumnos').DataTable({
         destroy:true,
         
@@ -240,26 +265,50 @@ $(document).ready(function(){
 
 
 
-     $('#tablaCoordinadores').DataTable({
-        
-        ajax:{
-		    url: "<?= base_url("Administrador_controler/mostrarUsuarios");?>",
-            type:"POST"
-        },
-        
-        columns:[
-            {"data":"id"},
-
-            {"data":"nombreUsuarios"},
-            
-            {"defaultContent":  " <div class='btn-group'><button type='button' class='btn btn-secondary' >Reiniciar Contraseña</button><button type='button' class='btn btn-warning'>Bloquear Alumno</button></div> "}
-
-        ],
-		language: {url:'<?= base_url("assets/datatables-Spanish.json");?>'}
-     });
+     
         
         });
 </script>
+
+
+<script>
+  
+  $("#formIngresarCoordinador").submit(  function(ev){
+    ev.preventDefault();
+
+	  $.ajax({
+      
+      url: "<?= base_url("Administrador/IngresarNuevoCoordinador");?>",
+	  	type: "post",
+      
+	  	data: $(this).serialize(),
+      
+	  	success: function (err) 
+          {
+            alert("exito");
+	  		//var json = JSON.parse(err);
+	  		//console.log(json);
+          
+	  		//alert(json);
+	  		//window.location.replace(json.url);
+	  	},
+	  	statusCode: 
+          {
+	  		400: function (xhr) {
+	  			var json = JSON.parse(xhr.responseText);
+              
+              
+	  			console.log(json);
+              
+	  		},
+          
+          
+	  	},
+	  });
+	
+	});
+
+    </script>
 </body>
 </html>
 
