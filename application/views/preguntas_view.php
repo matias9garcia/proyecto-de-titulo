@@ -18,6 +18,10 @@
 
 <body style="background-color:#F0F0F0">
     
+    <form action="<?=base_url('FormularioSocio')?>" method="post">
+        <button type="submit">Volver atrás</button>
+    </form>
+
     <div class="container border border-3 border-gray bg-light">
 <h1>Cuestionario de Motivacion y Estrategias de estudio</h1>
         

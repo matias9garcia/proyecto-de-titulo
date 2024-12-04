@@ -36,6 +36,13 @@ class Alumno_controller extends CI_Controller {
 
     }
 
+	public function ir_a_formulario_MSLQ()
+    {
+
+        $this->load->view('FormularioPreguntas');
+
+    }
+
     public function validarMSLQ()
     {
         $cantidadDePreguntas = $this->Preguntas_model->totalDePreguntas() ;
@@ -105,15 +112,19 @@ class Alumno_controller extends CI_Controller {
 		// ]);
 		// return;
 
-		// Llamar al modelo para insertar
+		// Llamar al modelo para insertar en la BD un nuevo formulario sociodemografico
         $resultado = $this->Alumnos_model->insertarNuevaRespuestaFormSocioDemografico($data);
 
+		
+		
+
         // // Responder al cliente
-        // if ($resultado) {
-        //     echo json_encode(['success' => true, 'message' => 'Alumno insertado correctamente.']);
-        // } else {
-        //     echo json_encode(['success' => false, 'message' => 'Error al insertar el alumno.']);
-        // };
+        if ($resultado) {
+			// Cargar la vista para pasar al siguiente formulario
+            echo json_encode(['success' => true, 'message' => 'Alumno insertado correctamente.']);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Error al insertar el alumno.']);
+        };
 
 		// $this->Alumnos_model->insertarNuevaRespuestaFormSocioDemografico(
 		// 	$rut_usuario, $carrera, $genero, $edad, $nacionalidad, 

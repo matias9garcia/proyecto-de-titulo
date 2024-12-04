@@ -640,9 +640,16 @@
                     Enviar formulario
             </button>
         </div>
+    
+    </form>
+
+        
     </section>
 </div>
-</form>
+
+    <form action="<?=base_url('FormularioPreguntas')?>" method="post">
+        <button type="submit">Ir al siguiente formulario</button>
+    </form>
 
 <br>
     
@@ -725,7 +732,8 @@ $(document).ready(function(){
 });
 
 </script>
-	<script >
+    
+	<script>
 
         $("#formSocio").submit(function (ev) {
             ev.preventDefault();
@@ -760,12 +768,8 @@ $(document).ready(function(){
         contentType: "application/json", // Indica que envías JSON
         data: jsonData, // Enviar JSON
         success: function (response) {
-            console.log("Respuesta del servidor:", response);
-            if (response.success) {
-                alert("Alumno insertado correctamente.");
-            } else {
-                alert("Error al insertar el alumno: " + response.message);
-            }
+            alert("Respuestas de formulario registradas correctamente");
+            document.getElementById("boton_siguiente_formulario").disabled = false;
         },
 
         error: function (xhr, status, error) {
