@@ -32,6 +32,7 @@ class Coordinador_controller extends CI_Controller {
             $ejemploArray_JSON[]=array(
                                     'id'=>$i,//$fila->id,
                                     'nombreAlumnos'=> $fila->nombres,
+									'apellidos' => $fila->apellidos,
 									'rutUsuario' => $fila->rutUsuario                                   
                                 );
                                 $i++;
@@ -89,37 +90,75 @@ class Coordinador_controller extends CI_Controller {
 		$pdf->Output();
 	}
 
+	public function consultarPorRutSocioDemo(){
+
+		$rut = json_decode(file_get_contents("php://input"), true);
+
+		$resultado = $this->Alumnos_model->consultarPorRutSocioDemo($rut)->result();
+		
+		
+
+        // // Responder al cliente
+        if ($resultado) {
+			// Cargar la vista para pasar al siguiente formulario
+            echo json_encode(['success' => true, 'message' => $resultado]);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Error al insertar el alumno.']);
+        };
+				
+	}
+
+	public function consultarRespuestasMSLQPorRut(){
+		$rut = json_decode(file_get_contents("php://input"), true);
+
+		$resultado = $this->Alumnos_model->consultarRespuestasMSLQPorRut($rut)->result();
+
+        // // Responder al cliente
+        if ($resultado) {
+			// Cargar la vista para pasar al siguiente formulario
+            echo json_encode(['success' => true, 'message' => $resultado]);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Error al insertar el alumno.']);
+        };
+	}
+
 	public function insertarAlumno()
 	{
 
-		$reglasDeValidacion	= getReglasDeNuevoUsuario();
+		// $reglasDeValidacion	= getReglasDeNuevoUsuario();
         
 
         //$this->form_validation->set_rules('ingresarUsuario', 'name','regex_match[/^(\d{1,2}(?:[\.]?\d{3}){2}-[\dkK])$/]|trim|required' );
         
         
-        $this->form_validation->set_rules( $reglasDeValidacion);
+        // $this->form_validation->set_rules( $reglasDeValidacion);
 		
-		if(	 $this->form_validation->run() === FALSE)
-		{
-			$this->output->set_status_header( 400 );
+		// if(	 $this->form_validation->run() === FALSE)
+		// {
+		// 	$this->output->set_status_header( 400 );
 
-            echo json_encode( array(
-                            'mensajeError' => form_error('rutUsuario' )
-                        )
-                );
-        }
+        //     echo json_encode( array(
+        //                     'mensajeError' => form_error('rutUsuario' )
+        //                 )
+        //         );
+        // }
         
-        else
+        // else
         
-        {
+        // {
 
 			/*obtener los datos ingresados desde la vista view/login_view.php 
 			que son obtenidos en el formulario a travez de metodo post*/
 
-			$rutAlumno =$this->input->post('rutUsuario');
+			// Leer y decodificar el JSON de la solicitud
+			$data = json_decode(file_get_contents("php://input"), true);
+    
+			// Acceder al valor de 'rut' y 'password'
+			$rut = $data['rut'];
+			$nombres = $data['nombres'];
+			$apellidos = $data['apellidos'];
 
-			$this->Usuarios_model->insertarUsuario( $rutAlumno ,"3","","" );
+			$this->Usuarios_model->insertarUsuario( $rut ,"3",$nombres,$apellidos );
 
 			
 			/*
@@ -141,4 +180,4 @@ class Coordinador_controller extends CI_Controller {
 
 
 
-}
+

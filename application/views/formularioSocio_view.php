@@ -573,14 +573,14 @@
         <div    class="col-md-6 form-group" 
                 id="form_group_formSocio_nombreDeCondicionMentalDiagnosticada">
         
-            <label  for = "formSocio_nombreDeCondicionMentalDiagnosticada"
+            <label  for = "tipoDeCondicionMentalDiagnosticada"
                     class = "form-label" >
                 *¿Cuál es su condición?
             </label>
 
             <input  type="text"
                     class="form-control" 
-                    id="formSocio_nombreDeCondicionMentalDiagnosticada"
+                    id="formSocio_tipoDeCondicionMentalDiagnosticada"
                     name = "formSocio_nombreDeCondicionMentalDiagnosticada"
                     >
             <div class="invalid-feedback"></div><!--mensaje de error LLENAR CAMPO-->
@@ -647,9 +647,13 @@
     </section>
 </div>
 
-    <form action="<?=base_url('FormularioPreguntas')?>" method="post">
-        <button type="submit">Ir al siguiente formulario</button>
-    </form>
+    <div style=" width: 100%; display: inline; text-align: center">
+        <form action="<?=base_url('FormularioPreguntas')?>" method="post" >
+            <button class="btn btn-success" type="submit">Ir al siguiente formulario</button>
+        </form>
+    </div>
+
+    
 
 <br>
     
@@ -757,6 +761,7 @@ $(document).ready(function(){
         formSocio_razonParaElegirLaCarreraActual: $("input[name='formSocio_razonParaElegirLaCarreraActual']:checked").val(),
         formSocio_otraRazonParaElegirLaCarreraActual: $("#formSocio_razonParaElegirLaCarreraActualMotivo").val(),
         formSocio_condicionMentalDiagnosticadaSiNoNose: $("input[name='formSocio_condicionMentalDiagnosticadaSiNoNose']:checked").val(),
+        formSocio_tipoCondicionMental: $("#formSocio_tipoDeCondicionMentalDiagnosticada").val(),
         formSocio_beneficioGratuidadSiNo: $("input[name='formSocio_beneficioGratuidadSiNo']:checked").val(),
     };
 

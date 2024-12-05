@@ -19,7 +19,7 @@
 <body style="background-color:#F0F0F0">
     
     <form action="<?=base_url('FormularioSocio')?>" method="post">
-        <button type="submit">Volver atrás</button>
+        <button class="btn btn-danger" style="margin: 20px" type="submit">Volver atrás</button>
     </form>
 
     <div class="container border border-3 border-gray bg-light">
@@ -174,8 +174,7 @@ $("#cuestionario_MSLQ").submit(function (ev) {
         contentType: "application/json", // Indica que envías JSON
         data: jsonData, // Enviar JSON
         success: function (response) {
-            //alert("Respuestas de formulario registradas correctamente");
-            alert(response);
+            alert("Respuestas de formulario registradas correctamente");
             //document.getElementById("boton_siguiente_formulario").disabled = false;
         },
 

@@ -50,7 +50,7 @@ class Usuarios_model extends CI_Model {
         
     }
 
-    public function insertarUsuario($rut, $rol, $nombres ="",$apellidos="")
+    public function insertarUsuario($rut, $rol, $nombres,$apellidos)
     {
 
         $contrasena=substr( str_replace("-","", $rut),-4);//extrae los 4 ultimos digitos del rut

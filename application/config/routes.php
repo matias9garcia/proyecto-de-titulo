@@ -86,6 +86,10 @@ $route['todosLosAlumnos'] = 'Coordinador_controller/mostrarAlumnos';
 
 $route['ingresarAlumno'] = 'Coordinador_controller/insertarAlumno';
 
+$route['consultarRespuestasSocioDemoPorRut'] = 'Coordinador_controller/consultarPorRutSocioDemo';
+
+$route['consultarRespuestasMSLQPorRut'] = 'Coordinador_controller/consultarRespuestasMSLQPorRut';
+
 
 /**ALUMNO */
 
